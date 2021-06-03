@@ -48,10 +48,6 @@ const styles = (theme) => ({
 
 
 class Login extends React.Component{
-  constructor(props){
-    super(props);
-  }
-
   render(){
     const { classes } = this.props;
 
@@ -69,7 +65,7 @@ class Login extends React.Component{
                   Bienvenido a nuestro sistema
                 </Typography>
                   <Grid container spacing={3} className={classes.buttons}>
-                    <Grid item xs={3}>
+                    <Grid item xs={4}>
                       <Button color="primary" component={Link} to="/sign-in">
                         Ingresar sesion
                       </Button>

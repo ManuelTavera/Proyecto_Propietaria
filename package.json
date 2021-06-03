@@ -10,6 +10,7 @@
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
     "material-ui-phone-number": "^2.2.6",
+    "query-string": "^4.3.4",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-imask": "^6.0.7",
@@ -17,7 +18,8 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
     "redux": "^4.1.0",
-    "redux-observable": "^1.2.0"
+    "redux-observable": "^1.2.0",
+    "rxjs-compat": "^6.6.7"
   },
   "scripts": {
     "start": "react-scripts start",
