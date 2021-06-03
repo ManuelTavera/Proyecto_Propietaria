@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -107,8 +108,8 @@ class SignIn extends React.Component {
                       </Link>
                     </Grid>
                     <Grid item>
-                      <Link href="#" variant="body2">
-                        {"Don't have an account? Sign Up"}
+                      <Link component={RouterLink} variant="body2" to="/sign-up">
+                        Don't have an account? Sign Up
                       </Link>
                     </Grid>
                   </Grid>
