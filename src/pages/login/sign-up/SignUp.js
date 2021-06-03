@@ -1,5 +1,7 @@
 import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
+import MuiPhoneNumber from 'material-ui-phone-number';
+import { IMaskMixin } from "react-imask";
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -43,11 +45,19 @@ const styles = (theme) => ({
     submit: {
       margin: theme.spacing(3, 0, 2),
     },
-  });
+});
+
+const TextFieldIMask = IMaskMixin((props) => (
+  <TextField {...props}/>
+));
 
 class SignUp extends React.Component {
     constructor(props){
         super(props);
+
+        this.state = {
+          
+        }
     }
 
     render(){
@@ -63,7 +73,7 @@ class SignUp extends React.Component {
                 <Typography component="h1" variant="h5">
                   Sign up
                 </Typography>
-                <form className={classes.form} noValidate>
+                <form className={classes.form}>
                   <Grid container spacing={2}>
                     <Grid item xs={12} sm={6}>
                       <TextField
@@ -91,6 +101,30 @@ class SignUp extends React.Component {
                     <Grid item xs={12}>
                       <TextField
                         variant="outlined"
+                        id="date"
+                        required
+                        fullWidth
+                        label="Fecha de nacimiento"
+                        type="date"
+                        defaultValue="0000-00-00"
+                        InputLabelProps={{
+                          shrink: true,
+                        }}
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <TextField
+                        variant="outlined"
+                        required
+                        fullWidth
+                        id="Usuario"
+                        label="Usuario"
+                        name="usuario"
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <TextField                        
+                        variant="outlined"
                         required
                         fullWidth
                         id="email"
@@ -109,6 +143,42 @@ class SignUp extends React.Component {
                         type="password"
                         id="password"
                         autoComplete="current-password"
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <TextField
+                        variant="outlined"
+                        required
+                        fullWidth
+                        name="confirmPassword"
+                        label="Confirmar contraseña"
+                        type="confirmPassword"
+                        id="password"
+                        autoComplete="current-password"
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <MuiPhoneNumber 
+                        defaultCountry={'do'} 
+                        onlyCountries={['do', 'us']}
+                        variant="outlined" 
+                        fullWidth
+                        required
+                        name="phone"
+                        label="Phone"
+                        id="phone"
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <TextFieldIMask
+                        mask={'000-0000000-0'}
+                        variant="outlined"
+                        label="Cédula"
+                        fullWidth
+                        required
+                        name="cedula"
+                        id="cedula"
+
                       />
                     </Grid>
                   </Grid>
