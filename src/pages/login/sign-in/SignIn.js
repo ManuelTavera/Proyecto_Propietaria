@@ -13,6 +13,25 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import { authUser } from '../../../common/store/actions/SignIn/user.actions';
+import { getAuthUser, getError } from '../../../common/store/selectors/user.selector';
+
+function mapDispatchToProps(dispatch){
+  return {
+    logUser: (data) => {
+      dispatch(authUser(data));
+    }
+  };
+}
+
+function mapStateToProps(state) {
+  return {
+    authUser: getAuthUser(state),
+    error: getError(state)
+  };
+};
 
 function Copyright() {
   return (
@@ -50,10 +69,33 @@ const styles = (theme) => ({
 class SignIn extends React.Component {
     constructor(props){
         super(props)
+
+        this.state = {
+          userName: '',
+          password: '',
+        }
+
+        this.onFieldChange = this.onFieldChange.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
+        this.validSubmit = this.validSubmit.bind(this);
+    }
+
+    onFieldChange(field, value){
+      this.setState({ [field]: value });
+    }
+
+    onSubmit(e){
+      e.preventDefault()
+      this.props.logUser(this.state)
+    }
+
+    validSubmit(){
+      return Object.keys(this.state).some(key => this.state[key] === '');
     }
 
     render(){
         const { classes } = this.props;
+        const { userName, password } = this.state;
 
         return (
             <Container component="main" maxWidth="xs">
@@ -76,6 +118,7 @@ class SignIn extends React.Component {
                     name="email"
                     autoComplete="email"
                     autoFocus
+                    onChange={(event) => this.onFieldChange('userName', event.target.value)}
                   />
                   <TextField
                     variant="outlined"
@@ -87,6 +130,7 @@ class SignIn extends React.Component {
                     type="password"
                     id="password"
                     autoComplete="current-password"
+                    onChange={(event) => this.onFieldChange('password', event.target.value)}
                   />
                   <FormControlLabel
                     control={<Checkbox value="remember" color="primary" />}
@@ -98,6 +142,8 @@ class SignIn extends React.Component {
                     variant="contained"
                     color="primary"
                     className={classes.submit}
+                    onClick={this.onSubmit}
+                    disabled={this.validSubmit() ? true: false}
                   >
                     Sign In
                   </Button>
@@ -123,4 +169,4 @@ class SignIn extends React.Component {
     }
 }
 
-export default withStyles(styles)(SignIn);
+export default compose(connect(mapStateToProps, mapDispatchToProps), withStyles(styles))(SignIn);
