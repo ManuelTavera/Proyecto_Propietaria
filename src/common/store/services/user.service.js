@@ -5,9 +5,7 @@ import {
 } from './api.service';
 
 export function authUserRequest(data) {
-    const formData = new FormData();
-    console.log('Hola');
-    parseBody(data, formData);
+    const value = JSON.parse(JSON.stringify(data));
 
-    return post('api/login', formData);
+    return post('api/login', value);
 }

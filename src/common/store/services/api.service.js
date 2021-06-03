@@ -5,6 +5,7 @@ export function post(url, body, auth = false){
     return ajax.post(
         `${API_URL}/${url}`,
         body,
+        { 'Content-Type': 'application/json' }
     );
 }
 
