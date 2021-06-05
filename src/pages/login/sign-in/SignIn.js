@@ -10,6 +10,10 @@ import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import IconButton from '@material-ui/core/IconButton';
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import InputAdornment from '@material-ui/core/InputAdornment';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
@@ -73,11 +77,14 @@ class SignIn extends React.Component {
         this.state = {
           userName: '',
           password: '',
+          showPassword: false,
         }
 
         this.onFieldChange = this.onFieldChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
         this.validSubmit = this.validSubmit.bind(this);
+        this.handleClickShowPassword = this.handleClickShowPassword.bind(this);
+        this.handleMouseDownPassword = this.handleMouseDownPassword.bind(this);
     }
 
     onFieldChange(field, value){
@@ -93,10 +100,17 @@ class SignIn extends React.Component {
       return Object.keys(this.state).some(key => this.state[key] === '');
     }
 
+    handleClickShowPassword(){
+      this.setState({ showPassword: !this.state.showPassword })
+    }
+
+    handleMouseDownPassword(event){
+      event.preventDefault();
+    }
+
     render(){
         const { classes } = this.props;
-        const { userName, password } = this.state;
-
+        const { showPassword } = this.state;
         return (
             <Container component="main" maxWidth="xs">
               <CssBaseline />
@@ -127,10 +141,23 @@ class SignIn extends React.Component {
                     fullWidth
                     name="password"
                     label="Password"
-                    type="password"
+                    type={showPassword ? 'text' : 'password'}
                     id="password"
                     autoComplete="current-password"
                     onChange={(event) => this.onFieldChange('password', event.target.value)}
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={this.handleClickShowPassword}
+                            onMouseDown={this.handleMouseDownPassword}
+                          >
+                            {showPassword ? <Visibility /> : <VisibilityOff />}
+                          </IconButton>
+                        </InputAdornment>
+                      )
+                    }}
                   />
                   <FormControlLabel
                     control={<Checkbox value="remember" color="primary" />}
