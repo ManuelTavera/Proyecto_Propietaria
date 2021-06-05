@@ -3,4 +3,5 @@ import * as userEpics from './user.epic';
 
 export const rootEpic = combineEpics(
     userEpics.authUserEpic,
+    userEpics.createUserEpic,
 );

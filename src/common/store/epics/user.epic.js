@@ -14,8 +14,19 @@ export const authUserEpic = (action$, store) =>
         ofType(userActionsLabels.AUTH_USER),
         mergeMap(action => 
             userRequests.authUserRequest(action.payload).pipe(
-                map(response => userActions.authUserSuccess(response.data)),
+                map(response => userActions.authUserSuccess(response.response)),
                 catchError(error => of(userActions.authUserFailure(error.response)))
             )
+        )
     )
-)
+
+export const createUserEpic = (action$, store) => 
+    action$.pipe(
+        ofType(userActionsLabels.CREATE_USER),
+        mergeMap(action => 
+            userRequests.createUserRequest(action.payload).pipe(
+                map(response => userActions.createUserSuccess(response.response)),
+                catchError(error => of(userActions.createUserFailure(error.response)))
+            )
+        )
+    )

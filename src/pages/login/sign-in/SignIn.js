@@ -1,5 +1,9 @@
 import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import { authUser } from '../../../common/store/actions/SignIn/user.actions';
+import { getAuthUser, getError } from '../../../common/store/selectors/user.selector';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -17,10 +21,6 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { connect } from 'react-redux';
-import { compose } from 'redux';
-import { authUser } from '../../../common/store/actions/SignIn/user.actions';
-import { getAuthUser, getError } from '../../../common/store/selectors/user.selector';
 
 function mapDispatchToProps(dispatch){
   return {
