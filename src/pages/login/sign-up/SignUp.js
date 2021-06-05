@@ -18,7 +18,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { emailRegex } from '../../../common/constants/regex.constant'
+import { emailRegex, phoneRegex } from '../../../common/constants/regex.constant'
 
 
 function mapDispatchToProps(dispatch){
@@ -123,11 +123,12 @@ class SignUp extends React.Component {
       event.preventDefault();
 
       if(this.validSubmit()){
-        const { userName, password, userType, validations, name, lastName, confirmPassword, birthDay , ...rest } = this.state;
+        const { userName, password, userType, validations, name, lastName, confirmPassword, birthDay, phone , ...rest } = this.state;
 
         const data = {
           name: name + ' ' + lastName,
-          birthDay: birthDay.replace('-', ''),
+          birthDay: birthDay.replace(/-/g, ''),
+          phone: phone.slice(2).replace(phoneRegex, ''),
           ...rest,
           user: {
             userName: userName,
