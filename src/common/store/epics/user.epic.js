@@ -34,7 +34,7 @@ export const createUserEpic = (action$, store) =>
 export const redirectUserFromLoginEpic = (action$, store, dependencies) =>
     action$.pipe(
         ofType(userActionsLabels.CREATE_USER_SUCCESS, userActionsLabels.AUTH_USER_SUCCESS),
-        tap(() => dependencies.history.push('/home'),
+        tap(() => dependencies.history.push('/home')),
         ignoreElements(),
     )
-)
+

@@ -21,6 +21,8 @@ export const complainsReducer = (state = complainsInitialState, action) => {
         }
         case complainsActionsLabels.GET_COMPLAINS_FAILURE: {
             const newStateObject = Object.assign({}, { error: action.payload ? action.payload.errors.message: 'Error de servidor' })
+            newState = merge(state, newStateObject);
+            break;
         }
         default:
             break;
