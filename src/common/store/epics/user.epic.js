@@ -2,7 +2,7 @@ import 'rxjs';
 import 'rxjs/add/observable/of';
 
 import { of } from 'rxjs';
-import { mergeMap, map, catchError } from 'rxjs/operators';
+import { mergeMap, map, catchError, tap, ignoreElements } from 'rxjs/operators';
 import { ofType } from 'redux-observable';
 
 import * as userActions from '../actions/SignIn/user.actions';
@@ -30,3 +30,11 @@ export const createUserEpic = (action$, store) =>
             )
         )
     )
+
+export const redirectUserFromLoginEpic = (action$, store, dependencies) =>
+    action$.pipe(
+        ofType(userActionsLabels.CREATE_USER_SUCCESS, userActionsLabels.AUTH_USER_SUCCESS),
+        tap(() => dependencies.history.push('/home')),
+        ignoreElements(),
+    )
+
