@@ -18,14 +18,12 @@ const styles = (theme) => ({
     textArea: {
         margin: '0 auto',
         width: '100%',
-        height: '50%',
         resize: 'none',
         height: 200,
         maxHeight: 300,
     },
     comboBox: {
         width: '100%',
-        marginTop: '20px',
         backgroundColor: '#FFF',
         borderRadius: '11px'
     },
@@ -42,6 +40,11 @@ const styles = (theme) => ({
     },
     centerTitle: {
         textAlign: 'center'
+    },
+    disabledItem: {
+        backgroundColor: '#cccccc',
+        borderRadius: '9px',
+        marginTop: '20px',
     }
 })
 
@@ -53,7 +56,7 @@ class CreateComplaint extends React.Component {
            <Container component="main" className={classes.container}>
               <CssBaseline />
                 <Typography variant="h3" component="h2" className={classes.centerTitle}>
-                    Crear queja
+                    Editar Queja
                 </Typography>
                 <Grid container spacing={3}>
                     <Grid item xs={6} className={classes.gridCenter}>
@@ -61,15 +64,17 @@ class CreateComplaint extends React.Component {
                             id="combo-box-demo"
                             options={[]}
                             getOptionLabel={(option) => option.title}
-                            className={classes.comboBox}
+                            className={`${classes.comboBox}} ${classes.disabledItem}`}
                             renderInput={(params) => <TextField {...params} label="Seleccione un tipo de queja" variant="outlined" />}
+                            disabled={true}
                             />
                             <Autocomplete
                                 id="combo-box-demo"
                                 options={[]}
                                 getOptionLabel={(option) => option.title}
-                                className={classes.comboBox}
+                                className={`${classes.comboBox}} ${classes.disabledItem}`}
                                 renderInput={(params) => <TextField {...params} label="Seleccione un departamento" variant="outlined" />}
+                                disabled={true}
                             />
                     </Grid>
                     <Grid item xs={7} className={classes.gridCenter}>
