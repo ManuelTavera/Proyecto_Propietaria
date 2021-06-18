@@ -149,7 +149,23 @@ class Home extends React.Component {
                     />
                 </TabPanel>
                 <TabPanel value={selectedTab} index={1}>
-                    Reclamaciones
+                    <CustomTable 
+                        columns={complaintColumns}
+                        rows={allComplains.map((complain) => {
+                            return createData(
+                                complain.personName,
+                                complain.departmentName,
+                                complain.description,
+                                complain.complainTypeName,
+                                complain.date,
+                                complain.state,
+                                complain.id,
+                            );
+                        })}
+                        deleteComplain={this.deleteComplain}
+                        addButtonText={'Crear reclamacion'}
+                        redirect={'/create/claim'}
+                    />
                 </TabPanel>
             </div>
         )
