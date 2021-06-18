@@ -6,6 +6,8 @@ import SignUp from './pages/login/sign-up/SignUp';
 import PrivateRoute from './PrivateRoutes';
 import history from './common/store/History';
 import Home from './pages/home/Home';
+import Drawer from './common/components/Drawer';
+import CreateComplaint from './pages/complaint/create/CreateComplaint';
 
 class App extends React.Component{
   constructor(props){
@@ -20,7 +22,10 @@ class App extends React.Component{
           <Route path="/sign-up" component={SignUp} />
           <Route path="/sign-in" component={SignIn} />
           <PrivateRoute>
-            <Route path="/home" component={Home} />
+              <Drawer>
+                <Route path="/home" component={Home} />
+                <Route path="/create/complaint" component={CreateComplaint} />
+              </Drawer>
           </PrivateRoute>
         </Switch>
       </Router>

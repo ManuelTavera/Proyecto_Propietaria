@@ -7,4 +7,5 @@ export const rootEpic = combineEpics(
     userEpics.createUserEpic,
     userEpics.redirectUserFromLoginEpic,
     complainsEpic.getComplainsEpic,
+    complainsEpic.deleteComplainEpic,
 );
