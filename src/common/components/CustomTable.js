@@ -1,5 +1,7 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
+import { withRouter } from "react-router";
+import { compose } from 'redux';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -11,6 +13,11 @@ import Grid from '@material-ui/core/Grid';
 import DeleteIcon from '@material-ui/icons/Delete';
 import CreateIcon from '@material-ui/icons/Create';
 import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import SearchIcon from '@material-ui/icons/Search';
+import TextField from '@material-ui/core/TextField';
 
 const lightColor = '#009be5';
 
@@ -54,62 +61,104 @@ const styles = (theme) => ({
     '&:hover':{
       backgroundColor: 'rgba(255, 0, 0, 0.7)'
     }
+  },
+  contentWrapper: {
+    margin: '40px 16px',
+  },
+  searchBar: {
+    marginBottom: 30,  
+    borderRadius: 50,
+  },
+  paper: {
+    borderRadius: 50,
   }
 });
 
-function CustomTable({ classes, columns, rows, deleteComplain}) {
-
+function CustomTable({ classes, columns, rows, deleteComplain, addButtonText, history, redirect }) {
   return (
-    <TableContainer component={Paper}>
-      <Table className={classes.table} aria-label="customized table">
-        <TableHead>
-          <TableRow>
-            {columns.map((column)=> (
-              <StyledTableCell align="left" key={column}>{column}</StyledTableCell>
-            ))}
-            <StyledTableCell align="left"></StyledTableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row) => (
-            <StyledTableRow key={row.date}>
-              <StyledTableCell align="left">{row.userName}</StyledTableCell>
-              <StyledTableCell align="left">{row.department}</StyledTableCell>
-              <StyledTableCell align="left">{row.description}</StyledTableCell>
-              <StyledTableCell align="left">{row.complaintType}</StyledTableCell>
-              <StyledTableCell align="left">{row.date}</StyledTableCell>
-              <StyledTableCell align="left">{row.state}</StyledTableCell>
-              <StyledTableCell align="left" component="th" scope="row">
-                <div className={classes.root}>
-                  <Grid container>
-                    <Grid item xs={6}>
-                      <Button
-                        variant="contained"
-                        className={`${classes.button} ${classes.deleteTheme}`}
-                        startIcon={<DeleteIcon />}
-                        onClick={() => deleteComplain(row)}
-                      >
-                        Borrar
-                      </Button>
-                    </Grid>
-                    <Grid item xs={6}>
-                      <Button
+    <React.Fragment>
+      <Paper className={classes.paper}>
+        <AppBar className={classes.searchBar} position="static" color="default" elevation={0}>
+          <Toolbar>
+            <Grid container spacing={2} alignItems="center">
+              <Grid item>
+                <SearchIcon className={classes.block} color="inherit" />
+              </Grid>
+              <Grid item xs>
+                <TextField
+                  fullWidth
+                  placeholder="Search"
+                  InputProps={{
+                    disableUnderline: true,
+                    className: classes.searchInput,
+                  }}
+                />
+              </Grid>
+              <Grid item>
+                <Button 
+                  variant="contained" 
+                  color="primary" 
+                  className={classes.addUser}
+                  onClick={() => history.push(redirect)}
+                >
+                  {addButtonText}
+                </Button>
+              </Grid>
+            </Grid>
+          </Toolbar>
+        </AppBar>
+      </Paper>
+      <TableContainer component={Paper}>
+        <Table className={classes.table} aria-label="customized table">
+          <TableHead>
+            <TableRow>
+              {columns.map((column)=> (
+                <StyledTableCell align="left" key={column}>{column}</StyledTableCell>
+              ))}
+              <StyledTableCell align="left"></StyledTableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {rows.map((row) => (
+              <StyledTableRow key={row.id}>
+                <StyledTableCell align="left">{row.userName}</StyledTableCell>
+                <StyledTableCell align="left">{row.department}</StyledTableCell>
+                <StyledTableCell align="left">{row.description}</StyledTableCell>
+                <StyledTableCell align="left">{row.complaintType}</StyledTableCell>
+                <StyledTableCell align="left">{row.date}</StyledTableCell>
+                <StyledTableCell align="left">{row.state}</StyledTableCell>
+                <StyledTableCell align="left">
+                  <div className={classes.root}>
+                    <Grid container>
+                      <Grid item xs={6}>
+                        <Button
                           variant="contained"
-                          className={`${classes.button} ${classes.updateTheme}`}
-                          startIcon={<CreateIcon />}
+                          className={`${classes.button} ${classes.deleteTheme}`}
+                          startIcon={<DeleteIcon />}
+                          onClick={() => deleteComplain(row.id)}
                         >
-                        Editar
-                      </Button>
+                          Borrar
+                        </Button>
+                      </Grid>
+                      <Grid item xs={6}>
+                        <Button
+                            variant="contained"
+                            className={`${classes.button} ${classes.updateTheme}`}
+                            startIcon={<CreateIcon />}
+                          >
+                          Editar
+                        </Button>
+                      </Grid>
                     </Grid>
-                  </Grid>
-                </div>
-              </StyledTableCell>
-            </StyledTableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+                  </div>
+                </StyledTableCell>
+              </StyledTableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </React.Fragment>
   );
 }
 
-export default withStyles(styles)(CustomTable);
+export default compose(withRouter, withStyles(styles))(CustomTable);

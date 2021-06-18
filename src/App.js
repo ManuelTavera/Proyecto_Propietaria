@@ -7,6 +7,7 @@ import PrivateRoute from './PrivateRoutes';
 import history from './common/store/History';
 import Home from './pages/home/Home';
 import Drawer from './common/components/Drawer';
+import CreateComplaint from './pages/complaint/create/CreateComplaint';
 
 class App extends React.Component{
   constructor(props){
@@ -23,6 +24,7 @@ class App extends React.Component{
           <PrivateRoute>
               <Drawer>
                 <Route path="/home" component={Home} />
+                <Route path="/create/complaint" component={CreateComplaint} />
               </Drawer>
           </PrivateRoute>
         </Switch>

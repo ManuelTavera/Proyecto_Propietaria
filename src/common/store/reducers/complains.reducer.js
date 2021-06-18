@@ -31,7 +31,8 @@ export const complainsReducer = (state = complainsInitialState, action) => {
             break;
         }
         case complainsActionsLabels.DELETE_COMPLAIN_SUCCESS: {
-            const newStateObject = Object.assign({}, { complainDeleted: true });
+            const newAllComplains = state.allComplains.filter((complain) => complain.id != action.payload)
+            const newStateObject = Object.assign({}, { complainDeleted: true, allComplains: newAllComplains });
             newState = merge(state, newStateObject)
             break;
         }

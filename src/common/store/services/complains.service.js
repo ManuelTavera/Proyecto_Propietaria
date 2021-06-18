@@ -9,8 +9,6 @@ export function getComplainsRequest(id){
     return get(`api/complain/mostrar/${id}`)
 }
 
-export function deleteComplainRequest(data){
-    const value = JSON.parse(JSON.stringify(data));
-
-    return del(`api/complain/eliminar`, value);
+export function deleteComplainRequest(id){
+    return del(`api/complain/eliminar/${id}`);
 }

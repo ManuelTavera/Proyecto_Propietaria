@@ -12,7 +12,6 @@ import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
 import Box from '@material-ui/core/Box';
 import CustomTable from '../../common/components/CustomTable';
-import { Restaurant } from '@material-ui/icons';
 
 function mapDispatchToProps(dispatch){
     return {
@@ -66,17 +65,8 @@ TabPanel.propTypes = {
     value: PropTypes.any.isRequired,
 };
 
-function createData({
-    personName: userName, 
-    departmentName: department,
-    description, 
-    complainTypeName: complaintType, 
-    date, 
-    stateTittle: state,
-    ...rest
-}) 
-{
-    return { userName, department, description, complaintType, date, state, rest };
+function createData(userName, department,description, complaintType, date, state, id){
+    return { userName, department, description, complaintType, date, state, id };
 }
   
 const complaintColumns = [
@@ -115,26 +105,10 @@ class Home extends React.Component {
         this.setState({ selectedTab: newValue });
     }
 
-    deleteComplain(complain){
-        
-        const {
-            rest: { id, idComplainType, idDepartment, idPerson, idState},
-            description,
-            date
-        } = complain;
-
-        const data = {
-            id,
-            idComplainType,
-            idDepartment,
-            idPerson,
-            idState,
-            description,
-            date
+    deleteComplain(id){
+        if(window.confirm("Esta seguro de que quiere eliminar esta queja?")){
+            this.props.deleteComplain(id);
         }
-
-        console.log('Data: ', data);
-        this.props.deleteComplain(data);
     }
 
     render(){
@@ -159,9 +133,19 @@ class Home extends React.Component {
                     <CustomTable 
                         columns={complaintColumns}
                         rows={allComplains.map((complain) => {
-                            return createData(complain);
+                            return createData(
+                                complain.personName,
+                                complain.departmentName,
+                                complain.description,
+                                complain.complainTypeName,
+                                complain.date,
+                                complain.state,
+                                complain.id,
+                            );
                         })}
                         deleteComplain={this.deleteComplain}
+                        addButtonText={'Crear queja'}
+                        redirect={'/create/complaint'}
                     />
                 </TabPanel>
                 <TabPanel value={selectedTab} index={1}>
