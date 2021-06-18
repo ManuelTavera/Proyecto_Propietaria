@@ -9,7 +9,7 @@ export function post(url, body, auth = false){
     );
 }
 
-export function del(url, auth = false) {
+export function del(url, body, auth = false) {
     return ajax.delete(
         `${API_URL}/${url}`
     );
