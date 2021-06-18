@@ -16,8 +16,9 @@ const styles = (theme) => ({
         height: '100%',
     },
     textArea: {
+        margin: '0 auto',
         width: '100%',
-        height: '100%',
+        height: '50%',
         resize: 'none',
         height: 500,
         maxHeight: 500,
@@ -26,14 +27,21 @@ const styles = (theme) => ({
         width: '100%',
         marginTop: '50px',
         backgroundColor: '#FFF',
+        borderRadius: '11px'
     },
     buttonContainer:{
-        justifyContent: 'flex-end',
+        justifyContent: 'center',
         paddingRight: '10px'
     },
     alignLeft: {
         justifyContent: 'flex-end',
-        display: 'flex'
+        display: 'flex',
+    },
+    gridCenter: {
+        margin: "0 auto"
+    },
+    centerTitle: {
+        textAlign: 'center'
     }
 })
 
@@ -43,37 +51,35 @@ class CreateComplaint extends React.Component {
 
         return(
            <Container component="main" className={classes.container}>
-               <CssBaseline />
-                <Typography variant="h3" component="h2">
+              <CssBaseline />
+                <Typography variant="h3" component="h2" className={classes.centerTitle}>
                     Crear queja
                 </Typography>
                 <Grid container spacing={3}>
-                    <Grid item xs={6}>
+                    <Grid item xs={6} className={classes.gridCenter}>
                         <Autocomplete
                             id="combo-box-demo"
                             options={[]}
                             getOptionLabel={(option) => option.title}
                             className={classes.comboBox}
                             renderInput={(params) => <TextField {...params} label="Seleccione un tipo de queja" variant="outlined" />}
-                        />
+                            />
+                            <Autocomplete
+                                id="combo-box-demo"
+                                options={[]}
+                                getOptionLabel={(option) => option.title}
+                                className={classes.comboBox}
+                                renderInput={(params) => <TextField {...params} label="Seleccione un departamento" variant="outlined" />}
+                            />
                     </Grid>
-                    <Grid item xs={6}>
-                        <Autocomplete
-                            id="combo-box-demo"
-                            options={[]}
-                            getOptionLabel={(option) => option.title}
-                            className={classes.comboBox}
-                            renderInput={(params) => <TextField {...params} label="Seleccione un departamento" variant="outlined" />}
-                        />
-                    </Grid>
-                    <Grid item xs={12}>
+                    <Grid item xs={7} className={classes.gridCenter}>
                         <Paper
                             component="textarea"
                             className={classes.textArea}
                         />
                     </Grid>
                     <Grid container className={classes.buttonContainer} spacing={1}>
-                        <Grid item xs={2} className={classes.alignLeft}>
+                        <Grid item xs={1} className={classes.alignLeft}>
                             <Button
                                 variant="contained"
                                 onClick={() => history.push('/home')}
