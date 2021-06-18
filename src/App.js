@@ -8,6 +8,9 @@ import history from './common/store/History';
 import Home from './pages/home/Home';
 import Drawer from './common/components/Drawer';
 import CreateComplaint from './pages/complaint/create/CreateComplaint';
+import EditComplaint from './pages/complaint/edit/EditComplaint';
+import CreateClaim from './pages/claim/create/CreateClaim';
+import EditClaim from './pages/claim/edit/EditClaim';
 
 class App extends React.Component{
   constructor(props){
@@ -25,6 +28,9 @@ class App extends React.Component{
               <Drawer>
                 <Route path="/home" component={Home} />
                 <Route path="/create/complaint" component={CreateComplaint} />
+                <Route path="/edit/complaint" component={EditComplaint} />
+                <Route path="/create/claim" component={CreateClaim} />
+                <Route path="/edit/claim" component={EditClaim} />
               </Drawer>
           </PrivateRoute>
         </Switch>
