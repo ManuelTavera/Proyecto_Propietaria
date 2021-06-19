@@ -30,3 +30,14 @@ export const deleteComplainEpic = (action$, store) =>
             )
         )
     )
+
+export const getComplainsTitleEpic = (action$, store) =>
+    action$.pipe(
+        ofType(complainsActionsLabels.GET_COMPLAINS_TITLE),
+        mergeMap( action => 
+            complainsRequest.getComplainsTitleRequest().pipe(
+                map(response => complainsActions.getComplainsTitleSuccess(response.response)),
+                catchError(error => of(complainsActions.getComplainsTitleFailure(error.response)))
+            )
+        )
+    )

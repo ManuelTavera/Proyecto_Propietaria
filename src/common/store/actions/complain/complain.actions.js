@@ -30,4 +30,31 @@ export const deleteComplainFailure = (error) => ({
     payload: error
 })
 
+export const getComplainsTitle = () => ({
+    type: complainsActionsLabels.GET_COMPLAINS_TITLE
+})
 
+export const getComplainsTitleSuccess = (response) => ({
+    type: complainsActionsLabels.GET_COMPLAINS_TITLE_SUCCESS,
+    payload: response
+})
+
+export const getComplainsTitleFailure = (error) => ({
+    type: complainsActionsLabels.GET_COMPLAINS_TITLE_FAILURE,
+    payload: error
+})
+
+export const updateComplain = (data) => ({
+    type: complainsActionsLabels.UPDATE_COMPLAIN,
+    payload: data
+})
+
+export const updateComplainSuccess = (response) => ({
+    type: complainsActionsLabels.UPDATE_COMPLAIN_SUCCESS,
+    payload: response
+})
+
+export const updateComplainFailure = (error) => ({
+    type: complainsActionsLabels.UPDATE_COMPLAIN_FAILURE,
+    payload: error
+})

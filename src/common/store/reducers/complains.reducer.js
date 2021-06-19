@@ -5,6 +5,7 @@ export const complainsInitialState = Object.seal({
     allComplains: null,
     error: null,
     complainDeleted: false,
+    complainsTitle: [],
 })
 
 export const complainsReducer = (state = complainsInitialState, action) => {
@@ -38,6 +39,21 @@ export const complainsReducer = (state = complainsInitialState, action) => {
         }
         case complainsActionsLabels.DELETE_COMPLAIN_FAILURE: {
             const newStateObject = Object.assign({}, { error: action.payload ? action.payload.errors.message: 'Error de servidor', complainDeleted: false });
+            newState = merge(state, newStateObject);
+            break;
+        }
+        case complainsActionsLabels.GET_COMPLAINS_TITLE: {
+            const newStateObject = Object.assign({}, { error: null });
+            newState = merge(state, newStateObject);
+            break;
+        }
+        case complainsActionsLabels.GET_COMPLAINS_TITLE_SUCCESS: {
+            const newStateObject = Object.assign({}, { error: null, complainsTitle: action.payload });
+            newState = merge(state, newStateObject);
+            break;
+        }
+        case complainsActionsLabels.GET_COMPLAINS_TITLE_FAILURE: {
+            const newStateObject = Object.assign({}, { error: action.payload ? action.payload.errors.message: 'Error de servidor', complainsTitle: [] });
             newState = merge(state, newStateObject);
             break;
         }

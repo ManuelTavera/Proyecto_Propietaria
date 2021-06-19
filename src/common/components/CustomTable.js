@@ -74,7 +74,7 @@ const styles = (theme) => ({
   }
 });
 
-function CustomTable({ classes, columns, rows, deleteComplain, addButtonText, history, redirect }) {
+function CustomTable({ classes, columns, rows, deleteComplain, addButtonText, history, redirect, editRedirect }) {
   return (
     <React.Fragment>
       <Paper className={classes.paper}>
@@ -145,6 +145,7 @@ function CustomTable({ classes, columns, rows, deleteComplain, addButtonText, hi
                             variant="contained"
                             className={`${classes.button} ${classes.updateTheme}`}
                             startIcon={<CreateIcon />}
+                            onClick={() => history.push(editRedirect + `/${row.id}`)}
                           >
                           Editar
                         </Button>

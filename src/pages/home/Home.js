@@ -146,6 +146,7 @@ class Home extends React.Component {
                         deleteComplain={this.deleteComplain}
                         addButtonText={'Crear queja'}
                         redirect={'/create/complaint'}
+                        editRedirect={'/edit/complaint'}
                     />
                 </TabPanel>
                 <TabPanel value={selectedTab} index={1}>
