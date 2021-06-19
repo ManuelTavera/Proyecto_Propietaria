@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import ComplaintReclaimBody from '../../../common/components/ComplaintReclaimBody';
 import { getComplainsTitle, createComplain } from '../../../common/store/actions/complain/complain.actions';
-import { getComplainsTitle as getTitle, getError } from '../../../common/store/selectors/complains.selector';
+import { getComplainsTitle as getTitle, getError, getComplainCreated } from '../../../common/store/selectors/complains.selector';
 import { getDepartments } from '../../../common/store/actions/department/department.action';
 import { getAllDepartments, getErrorDepartment } from '../../../common/store/selectors/department.selector';
 import { getAuthUser } from '../../../common/store/selectors/user.selector';
@@ -26,7 +26,8 @@ function mapStateToProps(state) {
         complaintsTitle: getTitle(state),
         error: getError(state),
         allDepartments: getAllDepartments(state),
-        authUser: getAuthUser(state)
+        authUser: getAuthUser(state),
+        complainCreated: getComplainCreated(state)
     }
 }
 
@@ -50,6 +51,12 @@ class CreateComplaint extends React.Component {
 
     componentDidMount(){
         this.props.getComplainsTitle();
+    }
+
+    componentDidUpdate(prevProps){
+        if(prevProps.complainCreated !== this.props.complainCreated && this.props.complainCreated){
+            window.alert("Se ha creado la queja exitosamente")
+        }
     }
 
     onFieldChange(field, value){

@@ -185,14 +185,14 @@ class Home extends React.Component {
                     />
                 </TabPanel>
                 <TabPanel value={selectedTab} index={1}>
-                <CustomTable 
+                    <CustomTable 
                         columns={claimColumns}
                         rows={allClaims.map((claim) => {
                             return createData(
                                 claim.personName,
                                 claim.departmentName,
                                 claim.description,
-                                claim.complainTypeName,
+                                claim.claimTypeName,
                                 claim.date,
                                 claim.stateTittle,
                                 claim.id,

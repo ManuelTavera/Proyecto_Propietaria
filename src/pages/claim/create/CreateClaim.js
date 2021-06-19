@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import ComplaintReclaimBody from '../../../common/components/ComplaintReclaimBody';
 import { getClaimsTitle, createClaim } from '../../../common/store/actions/claim/claim.action';
-import { getClaimsTitle as getTitle , getClaimsError } from '../../../common/store/selectors/claim.selector';
+import { getClaimsTitle as getTitle , getClaimsError, getClaimsCreated } from '../../../common/store/selectors/claim.selector';
 import { getDepartments } from '../../../common/store/actions/department/department.action';
 import { getAllDepartments, getErrorDepartment } from '../../../common/store/selectors/department.selector';
 import { getAuthUser } from '../../../common/store/selectors/user.selector';
@@ -28,6 +28,7 @@ function mapStateToProps(state) {
         allDepartments: getAllDepartments(state),
         authUser: getAuthUser(state),
         errorDepartment: getErrorDepartment(state),
+        claimCreated: getClaimsCreated(state),
     }
 }
 
@@ -51,6 +52,12 @@ class CreateClaim extends React.Component {
     componentDidMount(){
         this.props.getClaimsTitle();
         this.props.getDepartments();
+    }
+
+    componentDidUpdate(prevProps){
+        if(prevProps.claimCreated !== this.props.claimCreated && this.props.claimCreated){
+            window.alert("La reclamación se ha creado exitosamente")
+        }
     }
 
     onFieldChange(field, value){

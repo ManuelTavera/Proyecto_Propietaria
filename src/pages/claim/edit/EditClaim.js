@@ -1,40 +1,44 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import ComplaintReclaimBody from '../../../common/components/ComplaintReclaimBody';
-import { getComplainsTitle, updateComplain } from '../../../common/store/actions/complain/complain.actions';
-import { getComplainsTitle as getTitle, getError, getAllComplains, getComplainsUpdated } from '../../../common/store/selectors/complains.selector';
+import { getClaimsTitle, createClaim, updateClaim } from '../../../common/store/actions/claim/claim.action';
+import { getClaimsTitle as getTitle , getClaimsError, getAllClaims, getClaimUpdated, getClaimsCreated } from '../../../common/store/selectors/claim.selector';
 import { getDepartments } from '../../../common/store/actions/department/department.action';
 import { getAllDepartments, getErrorDepartment } from '../../../common/store/selectors/department.selector';
 import { getAuthUser } from '../../../common/store/selectors/user.selector';
 
 function mapDispatchToProps(dispatch){
     return {
-        getComplainsTitle: (data) => {
-            dispatch(getComplainsTitle(data));
+        getClaimsTitle: () => {
+            dispatch(getClaimsTitle());
       },
       getDepartments: () => {
           dispatch(getDepartments());
       },
-      updateComplain: (data) => {
-          dispatch(updateComplain(data));
+      createClaim: (data) => {
+          dispatch(createClaim(data))
+      },
+      updateClaim: (data) => {
+          dispatch(updateClaim(data))
       }
     }
   }
   
 function mapStateToProps(state) {
     return {
-        complaintsTitle: getTitle(state),
-        error: getError(state),
-        allComplaints: getAllComplains(state),
+        claimsTitle: getTitle(state),
+        error: getClaimsError(state),
         allDepartments: getAllDepartments(state),
         authUser: getAuthUser(state),
-        complainsUpdated: getComplainsUpdated(state),
+        errorDepartment: getErrorDepartment(state),
+        allClaims: getAllClaims(state),
+        claimUpdated: getClaimUpdated(state),
     }
 }
 
-class EditComplaint extends React.Component {
+class EditClaim extends React.Component {
     constructor(props){
-        super(props);
+        super(props)
 
         this.state = {
             title: null,
@@ -42,26 +46,25 @@ class EditComplaint extends React.Component {
             description: null,
             titleId: null,
             departmentId: null,
-            complaint: null,
+            claim: null,
         }
 
         this.onFieldChange = this.onFieldChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
-
     }
 
     componentDidMount(){
-        this.props.getComplainsTitle();
+        this.props.getClaimsTitle();
+        this.props.getDepartments();
 
-        const id = parseInt(this.props.match.params.complaintId);
-        const complaint = this.props.allComplaints.find((complaint) => complaint.id === id);
-        this.setState({ title: complaint.complainTypeName, department: complaint.departmentName, description: complaint.description, complaint: complaint })
-
+        const id = parseInt(this.props.match.params.claimId);
+        const claim = this.props.allClaims.find((claim) => claim.id === id);
+        this.setState({ title: claim.claimTypeName, department: claim.departmentName, description: claim.description, claim: claim })
     }
 
     componentDidUpdate(prevProps){
-        if(prevProps.complainsUpdated !== this.props.complainsUpdated && this.props.complainsUpdated){
-            window.alert("La queja se ha actualizado exitosamente")
+        if(prevProps.claimUpdated !== this.props.claimUpdated && this.props.claimUpdated){
+            window.alert("La reclamación se ha actualizado exitosamente")
         }
     }
 
@@ -72,33 +75,33 @@ class EditComplaint extends React.Component {
     onSubmit(){
         const idPerson = this.props.authUser.id;
         const idDeparment = this.props.allDepartments.find((department) => department.departmentName === this.state.department)
-        const date = this.state.complaint.date;
-        const idComplaint = this.props.complaintsTitle.find((complain) => complain.tittle === this.state.title)
+        const date = this.state.claim.date;
+        const idComplaint = this.props.claimsTitle.find((claim) => claim.tittle === this.state.title)
 
         const data = {
-            id: this.state.complaint.id,
+            id: this.state.claim.id,
             idPerson: idPerson,
             idDepartment: idDeparment.id,
             date: date,
             description: this.state.description,
-            idComplainType: idComplaint.id,
+            claimType: idComplaint.id,
             idState: idComplaint.stateId
         }
 
-        this.props.updateComplain(data);
+        this.props.updateClaim(data);
     }
 
     render(){
-        const { complaintsTitle, allDepartments, error } = this.props
-        const { title, department, description, complaint } = this.state
-        
-        return(
+        const { claimsTitle, allDepartments, error } = this.props
+        const { title, department, description, claim } = this.state
+
+        return (
             <React.Fragment>
-            { complaint !== null && allDepartments.length > 0 &&
+            { claim !== null && allDepartments.length > 0 &&
                 <ComplaintReclaimBody
-                    titleOptions={complaintsTitle.map(({ tittle }) => tittle)}
+                    titleOptions={claimsTitle.map(({ tittle }) => tittle)}
                     titleLabel="Seleccione el tipo de queja"
-                    pageTitle="Editar Quejas"
+                    pageTitle="Editar Reclamación"
                     deparmentOptions={allDepartments.map(({ departmentName }) => departmentName)}
                     descriptions={description}
                     complaintTitle={title}
@@ -112,4 +115,5 @@ class EditComplaint extends React.Component {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(EditComplaint);
+export default connect(mapStateToProps, mapDispatchToProps)(EditClaim);
+
