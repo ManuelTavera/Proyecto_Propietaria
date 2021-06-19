@@ -17,5 +17,6 @@ export const rootEpic = combineEpics(
     claimsEpics.deleteClaimEpic,
     claimsEpics.getClaimsTitleEpic,
     claimsEpics.updateClaimsEpic,
+    claimsEpics.createEpicClaimEpic,
     departmentEpics.getDepartmentsEpic,
 );

@@ -12,7 +12,7 @@ export const getClaimsSuccess = (data) => ({
 
 export const getClaimsFailure = (error) => ({
     type: claimsActionsLabels.GET_CLAIMS_FAILURE,
-    payload: error.response
+    payload: error
 })
 
 export const deleteClaim = (data) => ({

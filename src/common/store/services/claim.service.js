@@ -6,7 +6,7 @@ import {
     put
 } from './api.service';
 
-export function getClaimRequest(id){
+export function getClaimRequest(id = ''){
     return get(`api/claim/mostrar/${id}`);
 }
 
@@ -22,4 +22,10 @@ export function updateClaimsRequest(data){
     const value = JSON.parse(JSON.stringify(data))
 
     return put('api/claim/actualizar', value)
+}
+
+export function createClaimRequest(data){
+    const value = JSON.parse(JSON.stringify(data))
+    console.log('Value: ', value)
+    return post('api/claim/insertar', value)
 }

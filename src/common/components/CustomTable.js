@@ -74,7 +74,7 @@ const styles = (theme) => ({
   }
 });
 
-function CustomTable({ classes, columns, rows, deleteComplain, addButtonText, history, redirect, editRedirect }) {
+function CustomTable({ classes, columns, rows, deleteRequest, addButtonText, history, redirect, editRedirect, NotFoundMessage }) {
   return (
     <React.Fragment>
       <Paper className={classes.paper}>
@@ -135,7 +135,7 @@ function CustomTable({ classes, columns, rows, deleteComplain, addButtonText, hi
                           variant="contained"
                           className={`${classes.button} ${classes.deleteTheme}`}
                           startIcon={<DeleteIcon />}
-                          onClick={() => deleteComplain(row.id)}
+                          onClick={() => deleteRequest(row.id)}
                         >
                           Borrar
                         </Button>
@@ -157,6 +157,13 @@ function CustomTable({ classes, columns, rows, deleteComplain, addButtonText, hi
             ))}
           </TableBody>
         </Table>
+        {rows.length <= 0 && 
+          <div className={classes.contentWrapper}>
+            <Typography color="textSecondary" align="center">
+              {NotFoundMessage}
+            </Typography>
+          </div>
+        }
       </TableContainer>
     </React.Fragment>
   );

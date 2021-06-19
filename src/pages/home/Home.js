@@ -3,9 +3,14 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
+// Complain redux stuff
 import { getComplains, deleteComplain } from '../../common/store/actions/complain/complain.actions';
 import { getAllComplains, getError, complainDeleted } from '../../common/store/selectors/complains.selector';
+// User redux stuff
 import { getAuthUser } from '../../common/store/selectors/user.selector';
+// Claim redux stuff
+import { getClaims, deleteClaim } from '../../common/store/actions/claim/claim.action';
+import { getAllClaims, getClaimsError } from '../../common/store/selectors/claim.selector';
 
 import AppBar from '@material-ui/core/AppBar';
 import Tab from '@material-ui/core/Tab';
@@ -21,15 +26,23 @@ function mapDispatchToProps(dispatch){
         deleteComplain: (data) => {
             dispatch(deleteComplain(data));
         },
+        getClaims: (data) => {
+            dispatch(getClaims(data));
+        },
+        deleteClaim: (id) => {
+            dispatch(deleteClaim(id));
+        }
     }
 }
 
 function mapStateToProps(state) {
     return {
         allComplains: getAllComplains(state),
-        error: getError(state),
+        complainError: getError(state),
         user: getAuthUser(state),
         complainDeleted: complainDeleted(state),
+        allClaims: getAllClaims(state),
+        claimError: getClaimsError(state)
     }
 }
 
@@ -94,19 +107,25 @@ class Home extends React.Component {
         this.state = {
             selectedTab: 0,
             allComplains: [],
+            allClaims: []
         }
 
         this.changeTab = this.changeTab.bind(this);
         this.deleteComplain = this.deleteComplain.bind(this);
+        this.deleteClaim = this.deleteClaim.bind(this);
     }
 
     componentDidMount(){
         this.props.getComplains(this.props.user.id);
+        this.props.getClaims(this.props.user.id);
     }
 
     componentDidUpdate(prevProps, prevState){
         if(prevProps.allComplains !== this.props.allComplains){
             this.setState({ allComplains: this.props.allComplains });
+        }
+        if(prevProps.allClaims !== this.props.allClaims){
+            this.setState({ allClaims: this.props.allClaims });
         }
     }
 
@@ -120,9 +139,15 @@ class Home extends React.Component {
         }
     }
 
+    deleteClaim(id){
+        if(window.confirm("Esta seguro de que quiere eliminar esta queja?")){
+            this.props.deleteClaim(id)
+        }
+    }
+
     render(){
-        const { classes } = this.props;
-        const { selectedTab, allComplains } = this.state;
+        const { classes, complainError, claimError } = this.props;
+        const { selectedTab, allComplains, allClaims } = this.state;
 
         return (
             <div>
@@ -152,22 +177,33 @@ class Home extends React.Component {
                                 complain.id,
                             );
                         })}
-                        deleteComplain={this.deleteComplain}
+                        deleteRequest={this.deleteComplain}
                         addButtonText={'Crear queja'}
                         redirect={'/create/complaint'}
                         editRedirect={'/edit/complaint'}
+                        NotFoundMessage={'No se han creado ninguna queja'}
                     />
                 </TabPanel>
                 <TabPanel value={selectedTab} index={1}>
-                    {/* <CustomTable 
-                            columns={claimColumns}
-                            rows={[]}
-                            deleteComplain={() => {}}
-                            addButtonText={'Crear reclamación'}
-                            redirect={'/create/claim'}
-                            editRedirect={'/edit/claim'}
-                        /> */}
-                    Recomendación
+                <CustomTable 
+                        columns={claimColumns}
+                        rows={allClaims.map((claim) => {
+                            return createData(
+                                claim.personName,
+                                claim.departmentName,
+                                claim.description,
+                                claim.complainTypeName,
+                                claim.date,
+                                claim.stateTittle,
+                                claim.id,
+                            );
+                        })}
+                        deleteRequest={this.deleteClaim}
+                        addButtonText={'Crear reclamación'}
+                        redirect={'/create/claim'}
+                        editRedirect={'/edit/claim'}
+                        NotFoundMessage={'No se han creado ninguna reclamación'}
+                    />
                 </TabPanel>
             </div>
         )

@@ -15,7 +15,7 @@ export const getClaimsEpic = (action$, store) =>
         mergeMap(action => 
             claimsRequest.getClaimRequest(action.payload).pipe(
                 map(response => claimsActions.getClaimsSuccess(response.response)),
-                catchError(error => of(claimsActions.getClaimsFailure(error.response)))
+                catchError(error => of(claimsActions.getClaimsFailure(error)))
             )
         )
     )
@@ -49,5 +49,16 @@ export const updateClaimsEpic = (action$, store) =>
                 map(response => claimsActions.updateClaimSuccess(response.response)),
                 catchError(error => of(claimsActions.updateClaimFailure(error.response)))
             )
+        )
+    )
+
+export const createEpicClaimEpic = (action$, store) =>
+    action$.pipe(
+        ofType(claimsActionsLabels.CREATE_CLAIM),
+        mergeMap(action => 
+            claimsRequest.createClaimRequest(action.payload).pipe(
+                map(response => claimsActions.createClaimSuccess(response.response)),
+                catchError(error => of(claimsActions.createClaimFailure(error)))
+            )  
         )
     )

@@ -25,7 +25,8 @@ export const claimsReducer = (state = claimsInitialState, action) => {
             break;
         }
         case claimsActionsLabels.GET_CLAIMS_FAILURE: {
-            const newStateObject = Object.assign({}, { error: action.payload ? action.payload.errors.message: 'Error de servidor', allClaims: null })
+            console.log(action.payload)
+            const newStateObject = Object.assign({}, { error: action.payload ? action.payload.error: 'Error de servidor', allClaims: null })
             newState = merge(state, newStateObject);
             break;
         }
@@ -35,7 +36,8 @@ export const claimsReducer = (state = claimsInitialState, action) => {
             break;
         }
         case claimsActionsLabels.DELETE_CLAIM_SUCCESS: {
-            const newStateObject = Object.assign({}, { claimDeleted: true, error: null })
+            const allClaims = state.allClaims.filter((allClaims) => allClaims.id != action.payload)
+            const newStateObject = Object.assign({}, { claimDeleted: true, error: null, allClaims: allClaims })
             newState = merge(state, newStateObject)
             break;
         }
