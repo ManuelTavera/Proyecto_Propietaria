@@ -21,3 +21,10 @@ export function get(url, body, auth = false){
     );
 }
 
+export function put(url, body){
+    return ajax.put(
+        `${API_URL}/${url}`,
+        body,
+        { 'Content-Type': 'application/json' }
+    );
+}

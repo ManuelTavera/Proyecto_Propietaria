@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import ComplaintReclaimBody from '../../../common/components/ComplaintReclaimBody';
-import { getComplainsTitle } from '../../../common/store/actions/complain/complain.actions';
+import { getComplainsTitle, updateComplain } from '../../../common/store/actions/complain/complain.actions';
 import { getComplainsTitle as getTitle, getError, getAllComplains } from '../../../common/store/selectors/complains.selector';
 import { getDepartments } from '../../../common/store/actions/department/department.action';
 import { getAllDepartments, getErrorDepartment } from '../../../common/store/selectors/department.selector';
@@ -13,6 +13,9 @@ function mapDispatchToProps(dispatch){
       },
       getDepartments: () => {
           dispatch(getDepartments());
+      },
+      updateComplain: (data) => {
+          dispatch(updateComplain(data));
       }
     }
   }
@@ -34,32 +37,41 @@ class EditComplaint extends React.Component {
             title: null,
             department: null,
             description: null,
-            complaint: null
+            titleId: null,
+            departmentId: null,
+            complaint: null,
         }
 
         this.onFieldChange = this.onFieldChange.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
 
     }
 
     componentDidMount(){
         this.props.getComplainsTitle();
-        this.props.getDepartments();
+
         const id = parseInt(this.props.match.params.complaintId);
         const complaint = this.props.allComplaints.find((complaint) => complaint.id === id);
         this.setState({ title: complaint.complainTypeName, department: complaint.departmentName, description: complaint.description, complaint: complaint })
+
     }
 
     onFieldChange(field, value){
         this.setState({[field]: value});
     }
 
+    onSubmit(){
+        //this.props.updateComplain();
+    }
+
     render(){
         const { complaintsTitle, allDepartments, error } = this.props
         const { title, department, description, complaint } = this.state
         
+        console.log(allDepartments)
         return(
             <React.Fragment>
-            { complaint !== null &&
+            { complaint !== null && allDepartments.length > 0 &&
                 <ComplaintReclaimBody
                     titleOptions={complaintsTitle.map(({ tittle }) => tittle)}
                     titleLabel="Seleccione el tipo de queja"

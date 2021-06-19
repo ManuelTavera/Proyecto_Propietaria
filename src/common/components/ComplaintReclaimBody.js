@@ -39,8 +39,21 @@ const styles = (theme) => ({
     }
 })
 
-function ComplaintReclaimBody({ classes, history, deparmentOptions, titleOptions, titleLabel, pageTitle, descriptions, complaintTitle, onFieldChange, department }) {
-        console.log(complaintTitle)
+function ComplaintReclaimBody(
+{ 
+        classes, 
+        history, 
+        deparmentOptions, 
+        titleOptions, 
+        titleLabel, 
+        pageTitle, 
+        descriptions, 
+        complaintTitle, 
+        onFieldChange, 
+        department, 
+        onSubmit 
+}) 
+{
         return(
            <Container component="main" className={classes.container}>
                <CssBaseline />
@@ -53,7 +66,7 @@ function ComplaintReclaimBody({ classes, history, deparmentOptions, titleOptions
                             id="combo-box-1"
                             options={titleOptions}
                             className={classes.comboBox}
-                            renderInput={(params) => <TextField {...params} label={titleLabel} variant="outlined" value={complaintTitle}/>}
+                            renderInput={(params) => <TextField {...params} label={titleLabel} variant="outlined"/>}
                             value={complaintTitle}
                             onChange={(event, newValue) => {
                                 onFieldChange('title', newValue);
@@ -92,6 +105,7 @@ function ComplaintReclaimBody({ classes, history, deparmentOptions, titleOptions
                         <Grid item xs={1} className={classes.alignLeft}>
                             <Button
                                 variant="contained"
+                                onClick={() => onSubmit()}
                             >
                                 Enviar
                             </Button>

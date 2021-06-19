@@ -8,6 +8,7 @@ import { ofType } from 'redux-observable';
 import * as complainsActionsLabels from '../actions/complain/complain.actions.enum';
 import * as complainsActions from '../actions/complain/complain.actions';
 import * as complainsRequest from '../services/complains.service';
+import * as departmentActions from '../actions/department/department.action';
 
 export const getComplainsEpic = (action$, store) => 
     action$.pipe(
@@ -34,10 +35,32 @@ export const deleteComplainEpic = (action$, store) =>
 export const getComplainsTitleEpic = (action$, store) =>
     action$.pipe(
         ofType(complainsActionsLabels.GET_COMPLAINS_TITLE),
-        mergeMap( action => 
+        mergeMap(action => 
             complainsRequest.getComplainsTitleRequest().pipe(
-                map(response => complainsActions.getComplainsTitleSuccess(response.response)),
+                mergeMap(response => of(complainsActions.getComplainsTitleSuccess(response.response), departmentActions.getDepartments())),
                 catchError(error => of(complainsActions.getComplainsTitleFailure(error.response)))
             )
+        )
+    )
+
+export const updateComplainsEpic = (action$, store) =>
+    action$.pipe(
+        ofType(complainsActionsLabels.UPDATE_COMPLAIN),
+        mergeMap(action => 
+            complainsRequest.updateComplainsRequest(action.payload).pipe(
+                map(response => complainsActions.updateComplainSuccess(response.response)),
+                catchError(error => of(complainsActions.updateComplainFailure(error.response)))
+            )
+        )
+    )
+
+export const createComplainEpic = (action$, store) => 
+    action$.pipe(
+        ofType(complainsActionsLabels.CREATE_COMPLAIN),
+        mergeMap(action =>
+         complainsRequest.createComplainRequest(action.payload).pipe(
+             map(response => complainsActions.createComplainSuccess(response.response)),
+             catchError(error => of(complainsActions.createComplainFailure(error.response)))
+         )   
         )
     )

@@ -58,3 +58,18 @@ export const updateComplainFailure = (error) => ({
     type: complainsActionsLabels.UPDATE_COMPLAIN_FAILURE,
     payload: error
 })
+
+export const createComplain = (data) => ({
+    type: complainsActionsLabels.CREATE_COMPLAIN,
+    payload: data
+})
+
+export const createComplainSuccess = (response) => ({
+    type: complainsActionsLabels.CREATE_COMPLAIN_SUCCESS,
+    payload: response
+})
+
+export const createComplainFailure = (error) => ({
+    type: complainsActionsLabels.CREATE_COMPLAIN_FAILURE,
+    payload: error
+})

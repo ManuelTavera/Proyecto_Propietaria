@@ -78,6 +78,15 @@ const complaintColumns = [
     "Estado",
 ];
 
+const claimColumns = [
+    "Creado Por",
+    "Departamento",
+    "Descripción",
+    "Tipo de Reclamación",
+    "Creado en",
+    "Estado",
+];
+
 class Home extends React.Component {
     constructor(props){
         super(props);
@@ -150,7 +159,15 @@ class Home extends React.Component {
                     />
                 </TabPanel>
                 <TabPanel value={selectedTab} index={1}>
-                    Reclamaciones
+                    {/* <CustomTable 
+                            columns={claimColumns}
+                            rows={[]}
+                            deleteComplain={() => {}}
+                            addButtonText={'Crear reclamación'}
+                            redirect={'/create/claim'}
+                            editRedirect={'/edit/claim'}
+                        /> */}
+                    Recomendación
                 </TabPanel>
             </div>
         )
