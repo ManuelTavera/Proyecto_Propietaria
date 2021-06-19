@@ -5,6 +5,7 @@ import { getComplainsTitle, updateComplain } from '../../../common/store/actions
 import { getComplainsTitle as getTitle, getError, getAllComplains } from '../../../common/store/selectors/complains.selector';
 import { getDepartments } from '../../../common/store/actions/department/department.action';
 import { getAllDepartments, getErrorDepartment } from '../../../common/store/selectors/department.selector';
+import { getAuthUser } from '../../../common/store/selectors/user.selector';
 
 function mapDispatchToProps(dispatch){
     return {
@@ -25,7 +26,8 @@ function mapStateToProps(state) {
         complaintsTitle: getTitle(state),
         error: getError(state),
         allComplaints: getAllComplains(state),
-        allDepartments: getAllDepartments(state)
+        allDepartments: getAllDepartments(state),
+        authUser: getAuthUser(state),
     }
 }
 
@@ -61,14 +63,28 @@ class EditComplaint extends React.Component {
     }
 
     onSubmit(){
-        //this.props.updateComplain();
+        const idPerson = this.props.authUser.id;
+        const idDeparment = this.props.allDepartments.find((department) => department.departmentName === this.state.department)
+        const date = this.state.complaint.date;
+        const idComplaint = this.props.complaintsTitle.find((complain) => complain.tittle === this.state.title)
+
+        const data = {
+            id: this.state.complaint.id,
+            idPerson: idPerson,
+            idDepartment: idDeparment.id,
+            date: date,
+            description: this.state.description,
+            idComplainType: idComplaint.id,
+            idState: idComplaint.stateId
+        }
+
+        this.props.updateComplain(data);
     }
 
     render(){
         const { complaintsTitle, allDepartments, error } = this.props
         const { title, department, description, complaint } = this.state
         
-        console.log(allDepartments)
         return(
             <React.Fragment>
             { complaint !== null && allDepartments.length > 0 &&
@@ -81,6 +97,7 @@ class EditComplaint extends React.Component {
                     complaintTitle={title}
                     department={department}
                     onFieldChange={this.onFieldChange}
+                    onSubmit={this.onSubmit}
                 />
             }
             </React.Fragment>

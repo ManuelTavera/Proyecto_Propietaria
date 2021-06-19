@@ -26,6 +26,6 @@ export function updateComplainsRequest(data){
 
 export function createComplainRequest(data){
     const value = JSON.parse(JSON.stringify(data))
-    console.log('Value: ', value)
+
     return post('api/complain/insertar', value)
 }

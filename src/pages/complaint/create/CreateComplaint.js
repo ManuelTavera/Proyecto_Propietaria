@@ -64,7 +64,7 @@ class CreateComplaint extends React.Component {
         
         const data = {
             idPerson: idPerson,
-            idDeparment: idDeparment.id,
+            idDepartment: idDeparment.id,
             date: date,
             description: this.state.description,
             idComplainType: idComplaint.id,

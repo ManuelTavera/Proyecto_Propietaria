@@ -148,7 +148,7 @@ class Home extends React.Component {
                                 complain.description,
                                 complain.complainTypeName,
                                 complain.date,
-                                complain.state,
+                                complain.stateTittle,
                                 complain.id,
                             );
                         })}
