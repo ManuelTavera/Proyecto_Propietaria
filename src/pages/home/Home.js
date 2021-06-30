@@ -79,7 +79,16 @@ TabPanel.propTypes = {
 };
 
 function createData(userName, department,description, complaintType, date, state, id){
-    return { userName, department, description, complaintType, date, state, id };
+    let dataRow = new Map();
+    dataRow.set('Nombre del usuario', userName);
+    dataRow.set('Nombre del departamento', department);
+    dataRow.set('Descripcion', description);
+    dataRow.set('Tipo de queja o reclamacion', complaintType);
+    dataRow.set('Fecha', date);
+    dataRow.set('Estado', state);
+    dataRow.set('id', id)
+
+    return dataRow;
 }
   
 const complaintColumns = [

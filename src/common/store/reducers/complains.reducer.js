@@ -2,7 +2,7 @@ import * as complainsActionsLabels from '../actions/complain/complain.actions.en
 import merge from '../../helpers/merge';
 
 export const complainsInitialState = Object.seal({
-    allComplains: null,
+    allComplains: [],
     error: null,
     complainDeleted: false,
     complainsTitle: [],

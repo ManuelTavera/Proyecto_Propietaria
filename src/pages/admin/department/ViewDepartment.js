@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { getDepartments } from '../../../common/store/actions/department/department.action';
 import { getAllDepartments } from '../../../common/store/selectors/department.selector';
 import CustomTable from '../../../common/components/CustomTable';
+import Box from '@material-ui/core/Box';
 
 function mapDispatchToProps(dispatch){
     return {
@@ -23,6 +24,7 @@ function createData(departmenName, managerName, id){
     dataRow.set('Nombre del Departamento', departmenName);
     dataRow.set('Nombre del encargado', managerName);
     dataRow.set('id', id);
+
     return dataRow;
 }
 
@@ -56,7 +58,7 @@ class ViewDepartment extends React.Component {
         console.log('Departamentos: ', allDepartments)
 
         return (
-            <div>
+            <Box p={3}>
                 <CustomTable
                     columns={departmentColumns}
                     rows={allDepartments.map((department) => {
@@ -72,7 +74,7 @@ class ViewDepartment extends React.Component {
                     editRedirect={'/admin/edit/department'}
                     NotFoundMessage={'No se han creado ningun departamento'}
                 />
-            </div>
+            </Box>
         )
     }
 }

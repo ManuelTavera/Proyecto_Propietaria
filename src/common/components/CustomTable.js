@@ -119,42 +119,47 @@ function CustomTable({ classes, columns, rows, deleteRequest, addButtonText, his
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
-              <StyledTableRow key={row.id}>
-                <StyledTableCell align="left">{row.userName}</StyledTableCell>
-                <StyledTableCell align="left">{row.department}</StyledTableCell>
-                <StyledTableCell align="left">{row.description}</StyledTableCell>
-                <StyledTableCell align="left">{row.complaintType}</StyledTableCell>
-                <StyledTableCell align="left">{row.date}</StyledTableCell>
-                <StyledTableCell align="left">{row.state}</StyledTableCell>
-                <StyledTableCell align="left">
-                  <div className={classes.root}>
-                    <Grid container>
-                      <Grid item xs={6}>
-                        <Button
-                          variant="contained"
-                          className={`${classes.button} ${classes.deleteTheme}`}
-                          startIcon={<DeleteIcon />}
-                          onClick={() => deleteRequest(row.id)}
-                        >
-                          Borrar
-                        </Button>
-                      </Grid>
-                      <Grid item xs={6}>
-                        <Button
+            {rows.map((row) => {
+              let dataRow = [];
+              row.forEach((value, key) => {
+                if(key !== 'id'){
+                  dataRow.push(
+                    <StyledTableCell align="left" key={value}>{value}</StyledTableCell>
+                  )
+                }
+              });
+              return (
+                <StyledTableRow key={row.get('id')}>
+                    {dataRow.map((val) => val)}
+                  <StyledTableCell align="left">
+                    <div className={classes.root}>
+                      <Grid container>
+                        <Grid item xs={6}>
+                          <Button
                             variant="contained"
-                            className={`${classes.button} ${classes.updateTheme}`}
-                            startIcon={<CreateIcon />}
-                            onClick={() => history.push(editRedirect + `/${row.id}`)}
+                            className={`${classes.button} ${classes.deleteTheme}`}
+                            startIcon={<DeleteIcon />}
+                            onClick={() => deleteRequest(row.get('id'))}
                           >
-                          Editar
-                        </Button>
+                            Borrar
+                          </Button>
+                        </Grid>
+                        <Grid item xs={6}>
+                          <Button
+                              variant="contained"
+                              className={`${classes.button} ${classes.updateTheme}`}
+                              startIcon={<CreateIcon />}
+                              onClick={() => history.push(editRedirect + `/${row.get('id')}`)}
+                            >
+                            Editar
+                          </Button>
+                        </Grid>
                       </Grid>
-                    </Grid>
-                  </div>
-                </StyledTableCell>
-              </StyledTableRow>
-            ))}
+                    </div>
+                  </StyledTableCell>
+                </StyledTableRow>
+              )
+            })}
           </TableBody>
         </Table>
         {rows.length <= 0 && 
