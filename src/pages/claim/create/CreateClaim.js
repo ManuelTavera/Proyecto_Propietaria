@@ -99,7 +99,6 @@ class CreateClaim extends React.Component {
                 onSubmit={this.onSubmit}
             />
         )
-        return <div>hola</div>
     }
 }
 

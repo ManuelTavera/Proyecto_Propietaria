@@ -6,11 +6,13 @@ import SignUp from './pages/login/sign-up/SignUp';
 import PrivateRoute from './PrivateRoutes';
 import history from './common/store/History';
 import Home from './pages/home/Home';
-import Drawer from './common/components/Drawer';
 import CreateComplaint from './pages/complaint/create/CreateComplaint';
 import EditComplaint from './pages/complaint/edit/EditComplaint';
 import CreateClaim from './pages/claim/create/CreateClaim';
 import EditClaim from './pages/claim/edit/EditClaim';
+import AdminHome from './pages/admin/home/AdminHome';
+import ViewDepartment from './pages/admin/department/ViewDepartment';
+import Drawer from './common/components/Drawer';
 
 class App extends React.Component{
   constructor(props){
@@ -24,7 +26,14 @@ class App extends React.Component{
           <Route exact path="/" component={Login}/>
           <Route path="/sign-up" component={SignUp} />
           <Route path="/sign-in" component={SignIn} />
-          <PrivateRoute>
+          <PrivateRoute
+            adminRoutes={
+              <Drawer>
+                <Route path="/admin/home" component={AdminHome} />
+                <Route path="/admin/department" component={ViewDepartment} />
+              </Drawer>
+            }
+            publicRoutes={
               <Drawer>
                 <Route path="/home" component={Home} />
                 <Route path="/create/complaint" component={CreateComplaint} />
@@ -32,7 +41,8 @@ class App extends React.Component{
                 <Route path="/create/claim" component={CreateClaim}/>
                 <Route path="/edit/claim/:claimId" component={EditClaim}/>
               </Drawer>
-          </PrivateRoute>
+            }
+          />
         </Switch>
       </Router>
     );

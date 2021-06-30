@@ -12,24 +12,48 @@ function mapStateToProps(state){
 class PrivateRoutes extends React.Component {
     render(){
 
-        const { authUser, children, ...rest } = this.props;
+        const { authUser, children, adminRoutes, publicRoutes, ...rest } = this.props;
 
         return(
             <Route
-                {...rest}
+                { ...rest }
                 render={({ location }) => 
-                    authUser !== null 
-                    ? (
-                        children
-                    )
-                    : (
-                        <Redirect
-                            to={{
-                                pathname: "/sign-in",
-                                state: { from: location }
-                            }}
-                        />
-                    )
+                    {
+                        if(authUser && authUser.user.userType === 2){
+                            return (
+                                <React.Fragment>
+                                    { publicRoutes }
+                                </React.Fragment>
+                            )
+                        }
+                        else if (authUser && authUser.user.userType === 3){
+                            return (
+                                <React.Fragment>
+                                    { adminRoutes }
+                                </React.Fragment>
+                            )
+                        }
+                        else if (authUser === null){
+                            return (
+                                <Redirect
+                                    to={{
+                                        pathname: "/sign-in",
+                                        state: { from: location }
+                                    }}
+                                />
+                            )
+                        }
+                        else {
+                            return (
+                                <Redirect
+                                    to={{
+                                        pathname: "/home",
+                                        state: { from: location }
+                                    }}
+                                />
+                            )
+                        }
+                    }
                 }
             />
         )

@@ -34,7 +34,15 @@ export const createUserEpic = (action$, store) =>
 export const redirectUserFromLoginEpic = (action$, store, dependencies) =>
     action$.pipe(
         ofType(userActionsLabels.CREATE_USER_SUCCESS, userActionsLabels.AUTH_USER_SUCCESS),
-        tap(() => dependencies.history.push('/home')),
+        tap(() => {
+            const { value: { userReducer: { authUser } } } = store;
+            if(authUser.user.userType === 2){
+                dependencies.history.push('/home');
+            }
+            else{
+                dependencies.history.push('/admin/home');
+            }
+        }),
         ignoreElements(),
     )
 

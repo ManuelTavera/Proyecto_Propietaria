@@ -2,7 +2,7 @@ import * as userActionsLabels from '../actions/SignIn/user.actions.enum';
 import merge from '../../helpers/merge';
 
 export const userInitialState = Object.seal({
-    authUser: false,
+    authUser: null,
     error: null,
     userCreated: false,
 })
@@ -32,7 +32,7 @@ export const userReducer = (state = userInitialState, action) => {
             break;
         }
         case userActionsLabels.CREATE_USER_SUCCESS: {
-            const newStateObject = Object.assign({}, { userCreated: true, error: null });
+            const newStateObject = Object.assign({}, { userCreated: true, error: null, authUser: action.payload });
             newState = merge(state, newStateObject);
             break;
         }
