@@ -33,3 +33,17 @@ export const createUserFailure = (data) => ({
 export const resetProperties = () => ({
     type: userActionsLabels.RESET_PROPERTIES
 })
+
+export const getEmployees = () => ({
+    type: userActionsLabels.GET_EMPLOYESS
+})
+
+export const getEmployeesSuccess = (response) => ({
+    type: userActionsLabels.GET_EMPLOYESS_SUCCESS,
+    payload: response
+})
+
+export const getEmployeesFailure = (error) => ({
+    type: userActionsLabels.GET_EMPLOYESS_FAILURE,
+    payload: error
+})

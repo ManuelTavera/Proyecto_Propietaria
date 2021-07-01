@@ -7,6 +7,7 @@ import * as claimsEpics from './claim.epic';
 export const rootEpic = combineEpics(
     userEpics.authUserEpic,
     userEpics.createUserEpic,
+    userEpics.getAllEmployeesEpic,
     userEpics.redirectUserFromLoginEpic,
     complainsEpic.getComplainsEpic,
     complainsEpic.deleteComplainEpic,
@@ -19,4 +20,5 @@ export const rootEpic = combineEpics(
     claimsEpics.updateClaimsEpic,
     claimsEpics.createEpicClaimEpic,
     departmentEpics.getDepartmentsEpic,
+    departmentEpics.createDepartmentEpic,
 );

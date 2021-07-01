@@ -46,3 +46,14 @@ export const redirectUserFromLoginEpic = (action$, store, dependencies) =>
         ignoreElements(),
     )
 
+export const getAllEmployeesEpic = (action$, store) => 
+    action$.pipe(
+        ofType(userActionsLabels.GET_EMPLOYESS),
+        mergeMap(action => 
+            userRequests.getEmployeesRequest().pipe(
+                map(response => userActions.getEmployeesSuccess(response.response)),
+                catchError(error => of(userActions.getEmployeesFailure(error)))
+            )
+        )
+    )
+

@@ -55,7 +55,6 @@ class ViewDepartment extends React.Component {
 
     render(){
         const { allDepartments } = this.state;
-        console.log('Departamentos: ', allDepartments)
 
         return (
             <Box p={3}>

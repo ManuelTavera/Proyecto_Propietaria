@@ -5,6 +5,7 @@ export const userInitialState = Object.seal({
     authUser: null,
     error: null,
     userCreated: false,
+    employees: [],
 })
 
 export const userReducer = (state = userInitialState, action) => {
@@ -43,6 +44,21 @@ export const userReducer = (state = userInitialState, action) => {
         }
         case userActionsLabels.RESET_PROPERTIES: {
             const newStateObject = Object.assign({}, { error: null, userCreated: false });
+            newState = merge(state, newStateObject);
+            break;
+        }
+        case userActionsLabels.GET_EMPLOYESS: {
+            const newStateObject = Object.assign({}, { error: null });
+            newState = merge(state, newStateObject);
+            break;
+        }
+        case userActionsLabels.GET_EMPLOYESS_SUCCESS: {
+            const newStateObject = Object.assign({}, { error: null, employees: action.payload });
+            newState = merge(state, newStateObject);
+            break;
+        }
+        case userActionsLabels.GET_EMPLOYESS_FAILURE: {
+            const newStateObject = Object.assign({}, { error: action.payload ? action.payload.errors.message: 'Error de servidor', employees: [] });
             newState = merge(state, newStateObject);
             break;
         }

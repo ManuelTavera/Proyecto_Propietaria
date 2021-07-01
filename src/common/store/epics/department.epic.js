@@ -19,3 +19,36 @@ export const getDepartmentsEpic = (action$, store) =>
             )
         )
     )
+
+export const createDepartmentEpic = (action$, store) => 
+    action$.pipe(
+        ofType(departmentActionsLabels.CREATE_DEPARTMENT),
+        mergeMap(action => 
+            departmentRequest.createDepartmentRequest(action.payload).pipe(
+                map(response => departmentActions.createDepartmentSuccess(response.response)),
+                catchError(error => of(departmentActions.createDepartmentFailure(error.response)))
+            )
+        )
+    )
+
+export const deleteDepartmentEpic = (action$, store) =>
+    action$.pipe(
+        ofType(departmentActionsLabels.DELETE_DEPARTMENT),
+        mergeMap(action => 
+            departmentRequest.deleteDepartmentRequest(action.payload).pipe(
+                map(response => departmentActions.deleteDepartmentSuccess(response.response)),
+                catchError(error => of(departmentActions.deleteDepartmentFailure(error.response)))
+            )
+        )
+    )
+
+export const updateDepartmentRequest = (action$, store) => 
+    action$.pipe(
+        ofType(departmentActionsLabels.UPDATE_DEPARTMENT),
+        mergeMap(action => 
+            departmentRequest.updateDepartmentRequest(action.payload).pipe(
+                map(response => departmentActions.updateDepartmentSuccess(response.response)),
+                catchError(error => of(departmentActions.updateDepartmentFailure(error.response)))
+            )
+        )
+    )

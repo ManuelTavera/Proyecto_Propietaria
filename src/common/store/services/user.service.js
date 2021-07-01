@@ -15,3 +15,7 @@ export function createUserRequest(data) {
 
     return post('api/person/insertar', value);
 }
+
+export function getEmployeesRequest(id = ''){
+    return get(`api/employee/mostrar/${id}`);
+}
