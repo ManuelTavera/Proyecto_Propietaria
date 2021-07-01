@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getDepartments } from '../../../common/store/actions/department/department.action';
-import { getAllDepartments } from '../../../common/store/selectors/department.selector';
+import { getDepartments, deleteDepartment } from '../../../common/store/actions/department/department.action';
+import { getAllDepartments, getErrorDepartment, getDepartmentDeleted } from '../../../common/store/selectors/department.selector';
 import CustomTable from '../../../common/components/CustomTable';
 import Box from '@material-ui/core/Box';
 
@@ -9,13 +9,18 @@ function mapDispatchToProps(dispatch){
     return {
         getDepartments: () => {
             dispatch(getDepartments());
+        },
+        deleteDepartment: (id) => {
+            dispatch(deleteDepartment(id))
         }
     }
 }
 
 function mapStateToProps(state) {
     return {
-        departments: getAllDepartments(state)
+        departments: getAllDepartments(state),
+        error: getErrorDepartment(state),
+        departmentDeleted: getDepartmentDeleted(state)
     }
 }
 
@@ -41,6 +46,8 @@ class ViewDepartment extends React.Component {
         this.state = {
             allDepartments: [],
         };
+
+        this.deleteDepartment = this.deleteDepartment.bind(this);
     }
 
     componentDidMount(){
@@ -50,6 +57,18 @@ class ViewDepartment extends React.Component {
     componentDidUpdate(prevProps){
         if(prevProps.departments !== this.props.departments){
             this.setState({ allDepartments: this.props.departments });
+        }
+        if(prevProps.departmentDeleted !== this.props.departmentDeleted && this.props.departmentDeleted){
+            window.alert("Se ha eliminado exitosamente el departamento")
+        }
+        else if(prevProps.error !== this.props.error && !this.props.departmentDeleted && !this.props.error){
+            window.alert(this.props.error)
+        }
+    }
+
+    deleteDepartment(id){
+        if(window.confirm("Estas seguro de que desea eliminar el departamento?")){
+            this.props.deleteDepartment(id);
         }
     }
 
@@ -67,7 +86,7 @@ class ViewDepartment extends React.Component {
                             department.id
                         )
                     })}
-                    deleteRequest={() => {}}
+                    deleteRequest={this.deleteDepartment}
                     addButtonText={'Crear departamento'}
                     redirect={'/admin/create/department'}
                     editRedirect={'/admin/edit/department'}

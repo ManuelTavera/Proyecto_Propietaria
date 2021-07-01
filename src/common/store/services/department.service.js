@@ -2,6 +2,7 @@ import {
     post,
     get,
     del,
+    put
 } from './api.service';
 
 export function getDepartmentsRequest(){
@@ -21,5 +22,5 @@ export function deleteDepartmentRequest(id){
 export function updateDepartmentRequest(data){
     const value = JSON.parse(JSON.stringify(data));
 
-    return post('api/departments/actualizar', value);
+    return put('api/departments/actualizar', value);
 }
