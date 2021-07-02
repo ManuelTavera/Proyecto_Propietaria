@@ -3,6 +3,7 @@ import * as userEpics from './user.epic';
 import * as complainsEpic from './complains.epic';
 import * as departmentEpics from './department.epic';
 import * as claimsEpics from './claim.epic';
+import * as answerEpics from './answer.epic';
 
 export const rootEpic = combineEpics(
     userEpics.authUserEpic,
@@ -24,4 +25,5 @@ export const rootEpic = combineEpics(
     departmentEpics.deleteDepartmentEpic,
     departmentEpics.updateDepartmentRequest,
     departmentEpics.getDepartmentByIdRequest,
+    answerEpics.answerClaimComplaintEpic,
 );
