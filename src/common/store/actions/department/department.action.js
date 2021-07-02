@@ -58,3 +58,18 @@ export const updateDepartmentFailure = (error) => ({
     type: departmentActionsLabels.UPDATE_DEPARTMENT_FAILURE,
     payload: error
 })
+
+export const getDepartmentById = (id) => ({
+    type: departmentActionsLabels.GET_DEPARTMENT_BY_ID,
+    payload: id
+})
+
+export const getDepartmentByIdSuccess = (response) => ({
+    type: departmentActionsLabels.GET_DEPARTMENT_BY_ID_SUCCESS,
+    payload: response
+})
+
+export const getDepartmentByIdFailure = (error) => ({
+    type: departmentActionsLabels.GET_DEPARTMENT_BY_ID_FAILURE,
+    payload: error
+})

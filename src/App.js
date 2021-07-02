@@ -13,6 +13,7 @@ import EditClaim from './pages/claim/edit/EditClaim';
 import AdminHome from './pages/admin/home/AdminHome';
 import ViewDepartment from './pages/admin/department/ViewDepartment';
 import CreateDepartment from './pages/admin/department/create/CreateDepartment';
+import EditDepartment from './pages/admin/department/edit/EditDepartment';
 import Drawer from './common/components/Drawer';
 
 class App extends React.Component{
@@ -33,6 +34,7 @@ class App extends React.Component{
                 <Route path="/admin/home" component={AdminHome} />
                 <Route path="/admin/department" component={ViewDepartment} />
                 <Route path="/admin/create/department" component={CreateDepartment} />
+                <Route path="/admin/edit/department/:departmentId" component={EditDepartment} />
               </Drawer>
             }
             publicRoutes={

@@ -22,5 +22,6 @@ export const rootEpic = combineEpics(
     departmentEpics.getDepartmentsEpic,
     departmentEpics.createDepartmentEpic,
     departmentEpics.deleteDepartmentEpic,
-    departmentEpics.updateDepartmentRequest
+    departmentEpics.updateDepartmentRequest,
+    departmentEpics.getDepartmentByIdRequest,
 );

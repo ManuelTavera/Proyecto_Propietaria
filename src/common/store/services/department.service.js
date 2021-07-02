@@ -5,8 +5,8 @@ import {
     put
 } from './api.service';
 
-export function getDepartmentsRequest(){
-    return get('api/departments/mostrar');
+export function getDepartmentsRequest(id = ''){
+    return get(`api/departments/mostrar/${id}`);
 } 
 
 export function createDepartmentRequest(data){

@@ -52,3 +52,14 @@ export const updateDepartmentRequest = (action$, store) =>
             )
         )
     )
+
+export const getDepartmentByIdRequest = (action$, store) =>
+    action$.pipe(
+        ofType(departmentActionsLabels.GET_DEPARTMENT_BY_ID),
+        mergeMap(action => 
+            departmentRequest.getDepartmentsRequest(action.payload).pipe(
+                map(response => departmentActions.getDepartmentByIdSuccess(response.response)),
+                catchError(error => of(departmentActions.getDepartmentByIdFailure(error.response)))
+            )
+        )
+    )

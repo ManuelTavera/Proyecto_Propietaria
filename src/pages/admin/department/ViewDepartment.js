@@ -61,7 +61,7 @@ class ViewDepartment extends React.Component {
         if(prevProps.departmentDeleted !== this.props.departmentDeleted && this.props.departmentDeleted){
             window.alert("Se ha eliminado exitosamente el departamento")
         }
-        else if(prevProps.error !== this.props.error && !this.props.departmentDeleted && !this.props.error){
+        else if(prevProps.error !== this.props.error && !this.props.departmentDeleted && this.props.error){
             window.alert(this.props.error)
         }
     }

@@ -7,13 +7,14 @@ export const departmentInitialState = Object.seal({
     departmentCreated: false,
     departmentDeleted: false,
     departmentUpdated: false,
+    department: null
 })
 
 export const departmentReducer = (state = departmentInitialState, action) => {
     let newState = state;
     switch(action.type){
         case departmentActionsLabels.GET_DEPARTMENTS: {
-            const newStateObject = Object.assign({}, { error: null });
+            const newStateObject = Object.assign({}, { error: null, allDepartments: [] });
             newState = merge(state, newStateObject);
             break;
         }
@@ -70,6 +71,21 @@ export const departmentReducer = (state = departmentInitialState, action) => {
         }
         case departmentActionsLabels.UPDATE_DEPARTMENT_FAILURE: {
             const newStateObject = Object.assign({}, { error: 'Ocurrio un error actualizando el departamento', departmentUpdated: false });
+            newState = merge(state, newStateObject);
+            break;
+        }
+        case departmentActionsLabels.GET_DEPARTMENT_BY_ID: {
+            const newStateObject = Object.assign({}, { error: null, department: null });
+            newState = merge(state, newStateObject);
+            break;
+        }
+        case departmentActionsLabels.GET_DEPARTMENT_BY_ID_SUCCESS: {
+            const newStateObject = Object.assign({}, { error: null, department: action.payload[0] });
+            newState = merge(state, newStateObject);
+            break;
+        }
+        case departmentActionsLabels.GET_DEPARTMENT_BY_ID_FAILURE: {
+            const newStateObject = Object.assign({}, { error: 'Ocurrio un error actualizando el departamento', department: null });
             newState = merge(state, newStateObject);
             break;
         }
