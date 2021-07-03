@@ -55,9 +55,12 @@ class CreateDepartment extends React.Component{
         }
         if(this.props.edit){
             if(prevProps.employees !== this.props.employees){
-                const manager = this.props.employees.find((employee) => employee.idDepartment === this.props.department.id)
+                const manager = this.props.employees.find((employee) => employee.managerId === this.props.department.managerId)
                 console.log(manager);
                 this.setState({ manager: manager })
+            }
+            if(prevProps.departmentUpdated !== this.props.departmentUpdated && this.props.departmentUpdated){
+                window.alert('El departamento se ha editado satisfactoriamente.')
             }
         }
     }
@@ -83,7 +86,12 @@ class CreateDepartment extends React.Component{
             managerId: manager.managerId
         }
         
-        this.props.createDepartment(data);
+        if(this.props.edit){
+            this.props.updateDepartment(data);
+        }
+        else{
+            this.props.createDepartment(data);
+        }
     }
 
     render(){
@@ -99,6 +107,8 @@ class CreateDepartment extends React.Component{
                 onSubmit={this.onSubmit}
                 pageTitle={edit ? "Editar departamento": "Crear departamento"}
                 defaultValue={edit ? manager: null}
+                edit={edit}
+                manager={manager}
             />
         )
     }
