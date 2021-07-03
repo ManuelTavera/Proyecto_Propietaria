@@ -87,6 +87,7 @@ class CreateDepartment extends React.Component{
         }
         
         if(this.props.edit){
+            data['id'] = this.props.department.id;
             this.props.updateDepartment(data);
         }
         else{
