@@ -72,14 +72,14 @@ class EditComplaint extends React.Component {
     onSubmit(){
         const idPerson = this.props.authUser.id;
         const idDeparment = this.props.allDepartments.find((department) => department.departmentName === this.state.department)
-        const date = this.state.complaint.date;
+        const date = new Date().toISOString();
         const idComplaint = this.props.complaintsTitle.find((complain) => complain.tittle === this.state.title)
 
         const data = {
             id: this.state.complaint.id,
             idPerson: idPerson,
             idDepartment: idDeparment.id,
-            date: date,
+            date: date.replace('-', '').replace('-', '').slice(0, 8),
             description: this.state.description,
             idComplainType: idComplaint.id,
             idState: idComplaint.stateId

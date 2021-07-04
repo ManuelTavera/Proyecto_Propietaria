@@ -10,3 +10,15 @@ export function answerClaimComplaintRequest(data){
 
     return post('api/answer/insertar', value)
 }
+
+export function getAnswersRequest(data = ''){
+    return get(`api/answer/mostrar/${data}`)
+}
+
+export function getClaimsAnswersRequest(data = ''){
+    return get(`api/answer/mostrarReclamacion/${data}`)
+}
+
+export function getComplaintsAnswersRequest(data = ''){
+    return get(`api/answer/mostrarQueja/${data}`)
+}

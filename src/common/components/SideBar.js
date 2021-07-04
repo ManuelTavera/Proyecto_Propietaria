@@ -15,6 +15,7 @@ import HomeIcon from '@material-ui/icons/Home';
 import BusinessIcon from '@material-ui/icons/Business';
 import PriorityHighIcon from '@material-ui/icons/PriorityHigh';
 import BallotIcon from '@material-ui/icons/Ballot';
+import RateReviewIcon from '@material-ui/icons/RateReview';
 import { getAuthUser } from '../store/selectors/user.selector';
 
 function mapStateToProps(state) {
@@ -29,7 +30,8 @@ const adminCategories = [
     children: [
       { id: 'Departamento', icon: <BusinessIcon/>, route: '/admin/department' },
       { id: 'Quejas', icon: <PriorityHighIcon/>, route: '/admin/complaint' },
-      { id: 'Reclamación', icon: <BallotIcon/>, route: '/admin/claim' }
+      { id: 'Reclamación', icon: <BallotIcon/>, route: '/admin/claim' },
+      { id: 'Respuestas', icon: <RateReviewIcon/>, route: '/admin/response' },
     ]
   }
 ]

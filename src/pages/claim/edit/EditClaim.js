@@ -75,14 +75,14 @@ class EditClaim extends React.Component {
     onSubmit(){
         const idPerson = this.props.authUser.id;
         const idDeparment = this.props.allDepartments.find((department) => department.departmentName === this.state.department)
-        const date = this.state.claim.date;
+        const date = new Date().toISOString();
         const idComplaint = this.props.claimsTitle.find((claim) => claim.tittle === this.state.title)
 
         const data = {
             id: this.state.claim.id,
             idPerson: idPerson,
             idDepartment: idDeparment.id,
-            date: date,
+            date: date.replace('-', '').replace('-', '').slice(0, 8),
             description: this.state.description,
             claimType: idComplaint.id,
             idState: idComplaint.stateId

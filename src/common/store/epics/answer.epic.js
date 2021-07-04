@@ -19,3 +19,36 @@ export const answerClaimComplaintEpic = (action$, store) =>
             )
         )
     )
+
+export const getAnswersEpic = (action$, store) => 
+    action$.pipe(
+        ofType(answerActionsLabels.GET_ANSWERS),
+        mergeMap(action => 
+            answerRequest.getAnswersRequest(action.payload).pipe(
+                map(response => answerActions.getAnswersSuccess(response.response)),
+                catchError(error => of(answerActions.getAnswersFailure(error.response)))
+            )
+        )
+    )
+
+export const getClaimsAnswerEpic = (action$, store) => 
+    action$.pipe(
+        ofType(answerActionsLabels.GET_CLAIMS_ANSWER),
+        mergeMap(action => 
+            answerRequest.getClaimsAnswersRequest(action.payload).pipe(
+                mergeMap(response => of(answerActions.getClaimsAnswerSuccess(response.response), answerActions.getComplainsAnswer())),
+                catchError(error => of(answerActions.getClaimsAnswerFailure(error.response)))
+            )
+        )
+    )
+
+export const getComplaintsAnswerEpic = (action$, store) => 
+    action$.pipe(
+        ofType(answerActionsLabels.GET_COMPLAINTS_ANSWER),
+        mergeMap(action => 
+            answerRequest.getComplaintsAnswersRequest(action.payload).pipe(
+                map(response => answerActions.getComplainsAnswerSuccess(response.response)),
+                catchError(error => of(answerActions.getComplainsAnswerFailure(error.response)))
+            )
+        )
+    )
