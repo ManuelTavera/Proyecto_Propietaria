@@ -152,19 +152,21 @@ ComboBox.propTypes = {
     optionLabel: PropTypes.string,
     value: PropTypes.string,
     inputValue: PropTypes.string,
+    options: PropTypes.array,
 }
 
 ComboBox.defaultProps = {
     createTable: false,
     normalComboBox: false,
     controllable: false,
-    style: { width: 300 },
+    style: { width: '100%' },
     fullWidth: false,
     required: false,
     variant: "outlined",
     optionLabel: "",
     inputValue: "",
     value: "",
+    options: [],
 }
 
 export default ComboBox;

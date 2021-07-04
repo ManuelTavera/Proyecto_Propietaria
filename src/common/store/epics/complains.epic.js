@@ -21,6 +21,17 @@ export const getComplainsEpic = (action$, store) =>
         )
     )
 
+export const getByComplainId = (action$, store) => 
+    action$.pipe(
+        ofType(complainsActionsLabels.GET_BY_COMPLAIN_ID),
+        mergeMap(action =>
+            complainsRequest.getByComplainsIdRequest(action.payload).pipe(
+                map(response => complainsActions.getComplainsSuccess(response.response)),
+                catchError(error => of(complainsActions.getComplainsFailure(error.response))) 
+            )
+        )
+    )
+
 export const deleteComplainEpic = (action$, store) =>
     action$.pipe(
         ofType(complainsActionsLabels.DELETE_COMPLAIN),

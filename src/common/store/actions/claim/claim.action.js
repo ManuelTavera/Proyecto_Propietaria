@@ -15,6 +15,11 @@ export const getClaimsFailure = (error) => ({
     payload: error
 })
 
+export const getByClaimId = (id) => ({
+    type: claimsActionsLabels.GET_BY_CLAIM_ID,
+    payload: id
+})
+
 export const deleteClaim = (data) => ({
     type: claimsActionsLabels.DELETE_CLAIM,
     payload: data

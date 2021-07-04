@@ -13,6 +13,8 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import HomeIcon from '@material-ui/icons/Home';
 import BusinessIcon from '@material-ui/icons/Business';
+import PriorityHighIcon from '@material-ui/icons/PriorityHigh';
+import BallotIcon from '@material-ui/icons/Ballot';
 import { getAuthUser } from '../store/selectors/user.selector';
 
 function mapStateToProps(state) {
@@ -25,7 +27,9 @@ const adminCategories = [
   {
     id: 'Administrar',
     children: [
-      { id: 'Departamento', icon: <BusinessIcon/> }
+      { id: 'Departamento', icon: <BusinessIcon/>, route: '/admin/department' },
+      { id: 'Quejas', icon: <PriorityHighIcon/>, route: '/admin/complaint' },
+      { id: 'Reclamación', icon: <BallotIcon/>, route: '/admin/claim' }
     ]
   }
 ]
@@ -105,13 +109,13 @@ function SideBar(props) {
                 {id}
               </ListItemText>
             </ListItem>
-            {children.map(({ id: childId, icon, active }) => (
+            {children.map(({ id: childId, icon, route, active }) => (
               <ListItem
                 key={childId}
                 button
                 className={clsx(classes.item, active && classes.itemActiveItem)}
                 component={Link}
-                to="/admin/department"
+                to={route}
               >
                 <ListItemIcon className={classes.itemIcon}>{icon}</ListItemIcon>
                 <ListItemText

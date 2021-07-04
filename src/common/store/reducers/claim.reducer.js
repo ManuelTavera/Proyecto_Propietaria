@@ -3,7 +3,7 @@ import merge from '../../helpers/merge';
 
 
 export const claimsInitialState = Object.seal({
-    allClaims: null,
+    allClaims: [],
     error: null,
     claimDeleted: false,
     claimsTitle: [],
@@ -14,8 +14,9 @@ export const claimsInitialState = Object.seal({
 export const claimsReducer = (state = claimsInitialState, action) => {
     let newState = state;
     switch(action.type){
-        case claimsActionsLabels.GET_CLAIMS: {
-            const newStateObject = Object.assign({}, { error: null })
+        case claimsActionsLabels.GET_CLAIMS:
+        case claimsActionsLabels.GET_BY_CLAIM_ID: {
+            const newStateObject = Object.assign({}, { error: null, allClaims: [] })
             newState = merge(state, newStateObject);
             break;
         }
@@ -26,7 +27,7 @@ export const claimsReducer = (state = claimsInitialState, action) => {
         }
         case claimsActionsLabels.GET_CLAIMS_FAILURE: {
             console.log(action.payload)
-            const newStateObject = Object.assign({}, { error: action.payload ? action.payload.error: 'Error de servidor', allClaims: null })
+            const newStateObject = Object.assign({}, { error: action.payload ? action.payload.error: 'Error de servidor', allClaims: [] })
             newState = merge(state, newStateObject);
             break;
         }
