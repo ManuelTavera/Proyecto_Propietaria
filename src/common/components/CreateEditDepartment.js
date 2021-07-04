@@ -8,7 +8,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { withRouter } from "react-router";
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import Autocomplete from '@material-ui/lab/Autocomplete';
+import ComboBox from '../components/ComboBox';
 
 
 const styles = (theme) => ({
@@ -33,7 +33,20 @@ const styles = (theme) => ({
     }
 })
 
-function CreateEditDepartment({ classes, employees, departmentName, onChange, canSubmit, onSubmit, pageTitle, history, defaultValue }){
+function CreateEditDepartment(
+    { 
+        classes, 
+        employees, 
+        departmentName, 
+        onChange, 
+        canSubmit, 
+        onSubmit, 
+        pageTitle, 
+        history, 
+        manager,
+        edit 
+    }
+){
     return(
         <Container component="div" className={classes.container} maxWidth="sm">
             <CssBaseline />
@@ -53,16 +66,38 @@ function CreateEditDepartment({ classes, employees, departmentName, onChange, ca
                     value={departmentName}
                     onChange={(event) => onChange('departmentName', event.target.value)}
                 />
-                <Autocomplete
-                    id="combo-box-demo"
-                    options={employees}
-                    getOptionLabel={(option) => option.name}
-                    onChange={(event, value) => onChange('manager', value)}
-                    style={{ marginBottom: 20 }}
-                    className={classes.whiteBackground}
-                    value={defaultValue}
-                    renderInput={(params) => <TextField {...params} label="Encargado del departamento" fullWidth required variant="outlined" />}
-                />
+                {edit && 
+                    <ComboBox
+                        id="employees-combo-box"
+                        onChange={(value) => onChange('manager', value)}
+                        options={employees}
+                        controllable
+                        style={{ marginBottom: 20 }}
+                        className={classes.whiteBackground}
+                        fullWidth
+                        required
+                        variant="outlined"
+                        label="Seleccione un encargado"
+                        value={manager ? manager.name: null}
+                        optionSelectedLabel="name"
+                    />
+                }
+                {!edit &&
+                    <ComboBox
+                        id="employees-combo-box"
+                        onChange={(value) => onChange('manager', value)}
+                        options={employees}
+                        normalComboBox
+                        style={{ marginBottom: 20 }}
+                        className={classes.whiteBackground}
+                        fullWidth
+                        required
+                        variant="outlined"
+                        label="Seleccione un encargado"
+                        optionLabel="name"
+                    />
+                }
+
             </form>
             <Grid container className={classes.buttonContainer} spacing={3}>
                 <Grid item xs={4} className={classes.alignLeft}>

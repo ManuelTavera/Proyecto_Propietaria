@@ -1,4 +1,3 @@
-import parseBody from '../../helpers/parse-body';
 import {
     post,
     get,
@@ -7,7 +6,11 @@ import {
 } from './api.service';
 
 export function getComplainsRequest(id){
-    return get(`api/complain/mostrar/${id}`)
+    return get(`api/complain/mostrar/${id}`);
+}
+
+export function getByComplainsIdRequest(id){
+    return get(`api/complain/MostrarPorQueja/${id}`);
 }
 
 export function deleteComplainRequest(id){

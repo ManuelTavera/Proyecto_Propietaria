@@ -1,8 +1,8 @@
 import * as complainsActionsLabels from './complain.actions.enum';
 
-export const getComplains = (id) => ({
+export const getComplains = (data) => ({
     type: complainsActionsLabels.GET_COMPLAINS,
-    payload: id
+    payload: data
 })
 
 export const getComplainsSuccess = (data) => ({
@@ -12,7 +12,12 @@ export const getComplainsSuccess = (data) => ({
 
 export const getComplainsFailure = (error) => ({
     type: complainsActionsLabels.GET_COMPLAINS_FAILURE,
-    payload: error.response
+    payload: error
+})
+
+export const getByComplainsId = (id) => ({
+    type: complainsActionsLabels.GET_BY_COMPLAIN_ID,
+    payload: id,
 })
 
 export const deleteComplain = (data) => ({

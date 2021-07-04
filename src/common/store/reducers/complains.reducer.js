@@ -13,8 +13,9 @@ export const complainsInitialState = Object.seal({
 export const complainsReducer = (state = complainsInitialState, action) => {
     let newState = state;
     switch(action.type){
-        case complainsActionsLabels.GET_COMPLAINS: {
-            const newStateObject = Object.assign({}, { error: null });
+        case complainsActionsLabels.GET_COMPLAINS:
+        case complainsActionsLabels.GET_BY_COMPLAIN_ID: {
+            const newStateObject = Object.assign({}, { error: null, allComplains: [] });
             newState = merge(state, newStateObject);
             break;
         }

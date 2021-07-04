@@ -17,8 +17,20 @@ export const getClaimsEpic = (action$, store) =>
                 map(response => claimsActions.getClaimsSuccess(response.response)),
                 catchError(error => of(claimsActions.getClaimsFailure(error)))
             )
-        )
+        ),
     )
+
+export const getByClaimIdEpic = (action$, store) =>
+    action$.pipe(
+        ofType(claimsActionsLabels.GET_BY_CLAIM_ID),
+        mergeMap(action => 
+            claimsRequest.getByClaimIdRequest(action.payload).pipe(
+                map(response => claimsActions.getClaimsSuccess(response.response)),
+                catchError(error => of(claimsActions.getClaimsFailure(error)))
+            )
+        ),
+    )
+
 export const deleteClaimEpic = (action$, store) =>
     action$.pipe(
         ofType(claimsActionsLabels.DELETE_CLAIM),
