@@ -18,6 +18,7 @@ import ViewAdminClaim from './pages/admin/claim/ViewAdminClaim';
 import ViewAdminComplaint from './pages/admin/complaint/ViewAdminComplaint';
 import ResponseClaim from './pages/admin/claim/ResponseClaim';
 import ResponseComplaint from './pages/admin/complaint/ResponseComplaint';
+import AdminViewResponse from './pages/admin/response/AdminViewResponse';
 import Drawer from './common/components/Drawer';
 
 class App extends React.Component{
@@ -43,6 +44,7 @@ class App extends React.Component{
                 <Route exact path="/admin/complaint" component={ViewAdminComplaint} />
                 <Route path="/admin/claim/response/:claimId" component={ResponseClaim}/>
                 <Route path="/admin/complaint/response/:complaintId" component={ResponseComplaint}/>
+                <Route path="/admin/response" component={AdminViewResponse}/>
               </Drawer>
             }
             publicRoutes={

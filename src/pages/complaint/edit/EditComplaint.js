@@ -40,8 +40,6 @@ class EditComplaint extends React.Component {
             title: null,
             department: null,
             description: null,
-            titleId: null,
-            departmentId: null,
             complaint: null,
         }
 
@@ -55,13 +53,24 @@ class EditComplaint extends React.Component {
 
         const id = parseInt(this.props.match.params.complaintId);
         const complaint = this.props.allComplaints.find((complaint) => complaint.id === id);
-        this.setState({ title: complaint.complainTypeName, department: complaint.departmentName, description: complaint.description, complaint: complaint })
-
+        this.setState({ description: complaint.description, complaint: complaint })
     }
 
     componentDidUpdate(prevProps){
         if(prevProps.complainsUpdated !== this.props.complainsUpdated && this.props.complainsUpdated){
             window.alert("La queja se ha actualizado exitosamente")
+        }
+        if(prevProps.complaintsTitle !== this.props.complaintsTitle){
+            const { complaint } = this.state;
+            const { complaintsTitle } = this.props;
+            const title = complaintsTitle.find((title) => complaint.complainTypeName === title.tittle);
+            this.setState({ title: title })
+        }
+        if(prevProps.allDepartments !== this.props.allDepartments){
+            const { complaint } = this.state;
+            const { allDepartments } = this.props;
+            const department = allDepartments.find((department) => department.departmentName === complaint.departmentName)
+            this.setState({ department: department })
         }
     }
 
@@ -70,19 +79,20 @@ class EditComplaint extends React.Component {
     }
 
     onSubmit(){
+        const { title, department, description, complaint } = this.state;
         const idPerson = this.props.authUser.id;
-        const idDeparment = this.props.allDepartments.find((department) => department.departmentName === this.state.department)
-        const date = this.state.complaint.date;
-        const idComplaint = this.props.complaintsTitle.find((complain) => complain.tittle === this.state.title)
+        // const idDeparment = this.props.allDepartments.find((department) => department.departmentName === this.state.department)
+        const date = new Date().toISOString();
+        // const idComplaint = this.props.complaintsTitle.find((complain) => complain.tittle === this.state.title)
 
         const data = {
-            id: this.state.complaint.id,
+            id: complaint.id,
             idPerson: idPerson,
-            idDepartment: idDeparment.id,
-            date: date,
-            description: this.state.description,
-            idComplainType: idComplaint.id,
-            idState: idComplaint.stateId
+            idDepartment: department.id,
+            date: date.replace('-', '').replace('-', '').slice(0, 8),
+            description: description,
+            idComplainType: title.id,
+            idState: title.stateId
         }
 
         this.props.updateComplain(data);
@@ -96,15 +106,16 @@ class EditComplaint extends React.Component {
             <React.Fragment>
             { complaint !== null && allDepartments.length > 0 &&
                 <ComplaintReclaimBody
-                    titleOptions={complaintsTitle.map(({ tittle }) => tittle)}
+                    titleOptions={complaintsTitle}
                     titleLabel="Seleccione el tipo de queja"
                     pageTitle="Editar Quejas"
-                    deparmentOptions={allDepartments.map(({ departmentName }) => departmentName)}
+                    deparmentOptions={allDepartments}
                     descriptions={description}
                     complaintTitle={title}
                     department={department}
                     onFieldChange={this.onFieldChange}
                     onSubmit={this.onSubmit}
+                    edit={true}
                 />
             }
             </React.Fragment>

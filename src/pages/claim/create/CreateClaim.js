@@ -40,9 +40,6 @@ class CreateClaim extends React.Component {
             title: null,
             department: null,
             description: '',
-            titleId: null,
-            departmentId: null,
-            complaint: null,
         }
 
         this.onFieldChange = this.onFieldChange.bind(this);
@@ -65,18 +62,19 @@ class CreateClaim extends React.Component {
     }
 
     onSubmit(){
+        const { title, department, description } = this.state;
         const idPerson = this.props.authUser.id;
-        const idDeparment = this.props.allDepartments.find((department) => department.departmentName === this.state.department)
-        const date = '20000101';
-        const idClaim = this.props.claimsTitle.find((claim) => claim.tittle === this.state.title)
+        // const idDeparment = this.props.allDepartments.find((department) => department.departmentName === this.state.department)
+        const date = new Date().toISOString();
+        // const idClaim = this.props.claimsTitle.find((claim) => claim.tittle === this.state.title)
         
         const data = {  
             idPerson: idPerson,
-            idDepartment: idDeparment.id,
-            date: date,
-            description: this.state.description,
-            claimType: idClaim.id,
-            idState: idClaim.stateId
+            idDepartment: department.id,
+            date: date.replace('-', '').replace('-', '').slice(0, 8),
+            description: description,
+            claimType: title.id,
+            idState: title.stateId
         }
 
         this.props.createClaim(data);
@@ -84,14 +82,14 @@ class CreateClaim extends React.Component {
 
     render(){
         const { claimsTitle, allDepartments, error } = this.props
-        const { title, department, description, complaint } = this.state
+        const { title, department, description } = this.state
 
         return(
             <ComplaintReclaimBody
-                titleOptions={claimsTitle.map(({ tittle }) => tittle)}
+                titleOptions={claimsTitle}
                 titleLabel="Seleccione el tipo de reclamación"
                 pageTitle="Crear Reclamación"
-                deparmentOptions={allDepartments.map(({ departmentName }) => departmentName)}
+                deparmentOptions={allDepartments}
                 descriptions={description}
                 complaintTitle={title}
                 department={department}

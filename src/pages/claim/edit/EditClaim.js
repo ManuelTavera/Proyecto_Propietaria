@@ -11,16 +11,16 @@ function mapDispatchToProps(dispatch){
     return {
         getClaimsTitle: () => {
             dispatch(getClaimsTitle());
-      },
-      getDepartments: () => {
-          dispatch(getDepartments());
-      },
-      createClaim: (data) => {
-          dispatch(createClaim(data))
-      },
-      updateClaim: (data) => {
-          dispatch(updateClaim(data))
-      }
+        },
+        getDepartments: () => {
+            dispatch(getDepartments());
+        },
+        createClaim: (data) => {
+            dispatch(createClaim(data))
+        },
+        updateClaim: (data) => {
+            dispatch(updateClaim(data))
+        }
     }
   }
   
@@ -44,8 +44,6 @@ class EditClaim extends React.Component {
             title: null,
             department: null,
             description: null,
-            titleId: null,
-            departmentId: null,
             claim: null,
         }
 
@@ -59,12 +57,24 @@ class EditClaim extends React.Component {
 
         const id = parseInt(this.props.match.params.claimId);
         const claim = this.props.allClaims.find((claim) => claim.id === id);
-        this.setState({ title: claim.claimTypeName, department: claim.departmentName, description: claim.description, claim: claim })
+        this.setState({ description: claim.description, claim: claim });
     }
 
     componentDidUpdate(prevProps){
         if(prevProps.claimUpdated !== this.props.claimUpdated && this.props.claimUpdated){
             window.alert("La reclamación se ha actualizado exitosamente")
+        }
+        if(prevProps.claimsTitle !== this.props.claimsTitle){
+            const { claim } = this.state;
+            const { claimsTitle } = this.props;
+            const title = claimsTitle.find((title) => claim.claimTypeName === title.tittle);
+            this.setState({ title: title })
+        }
+        if(prevProps.allDepartments !== this.props.allDepartments){
+            const { claim } = this.state;
+            const { allDepartments } = this.props;
+            const department = allDepartments.find((department) => department.departmentName === claim.departmentName)
+            this.setState({ department: department })
         }
     }
 
@@ -73,19 +83,18 @@ class EditClaim extends React.Component {
     }
 
     onSubmit(){
+        const { title, department, description, claim } = this.state;
         const idPerson = this.props.authUser.id;
-        const idDeparment = this.props.allDepartments.find((department) => department.departmentName === this.state.department)
-        const date = this.state.claim.date;
-        const idComplaint = this.props.claimsTitle.find((claim) => claim.tittle === this.state.title)
+        const date = new Date().toISOString();
 
         const data = {
-            id: this.state.claim.id,
+            id: claim.id,
             idPerson: idPerson,
-            idDepartment: idDeparment.id,
-            date: date,
-            description: this.state.description,
-            claimType: idComplaint.id,
-            idState: idComplaint.stateId
+            idDepartment: department.id,
+            date: date.replace('-', '').replace('-', '').slice(0, 8),
+            description: description,
+            claimType: title.id,
+            idState: title.stateId
         }
 
         this.props.updateClaim(data);
@@ -99,15 +108,16 @@ class EditClaim extends React.Component {
             <React.Fragment>
             { claim !== null && allDepartments.length > 0 &&
                 <ComplaintReclaimBody
-                    titleOptions={claimsTitle.map(({ tittle }) => tittle)}
+                    titleOptions={claimsTitle}
                     titleLabel="Seleccione el tipo de queja"
                     pageTitle="Editar Reclamación"
-                    deparmentOptions={allDepartments.map(({ departmentName }) => departmentName)}
+                    deparmentOptions={allDepartments}
                     descriptions={description}
                     complaintTitle={title}
                     department={department}
                     onFieldChange={this.onFieldChange}
                     onSubmit={this.onSubmit}
+                    edit={true}
                 />
             }
             </React.Fragment>

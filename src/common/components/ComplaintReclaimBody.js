@@ -10,6 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import ComboBox from './ComboBox';
 
 const styles = (theme) => ({
     container: {
@@ -48,7 +49,8 @@ function ComplaintReclaimBody(
         titleLabel, 
         pageTitle, 
         descriptions, 
-        complaintTitle, 
+        complaintTitle,
+        edit, 
         onFieldChange, 
         department, 
         onSubmit 
@@ -62,28 +64,68 @@ function ComplaintReclaimBody(
                 </Typography>
                 <Grid container spacing={3}>
                     <Grid item xs={6}>
-                        <Autocomplete
-                            id="combo-box-1"
-                            options={titleOptions}
-                            className={classes.comboBox}
-                            renderInput={(params) => <TextField {...params} label={titleLabel} variant="outlined"/>}
-                            value={complaintTitle}
-                            onChange={(event, newValue) => {
-                                onFieldChange('title', newValue);
-                            }}
-                        />
+                        {!edit &&
+                            <ComboBox
+                                id="title-combo-box-1"
+                                onChange={(value) => onFieldChange('title', value)}
+                                options={titleOptions}
+                                normalComboBox
+                                className={classes.comboBox}
+                                fullWidth
+                                required
+                                variant="outlined"
+                                label={titleLabel}
+                                optionLabel="tittle"
+                            />
+                        }
+                        {edit &&
+                            <ComboBox
+                                id="combo-box-1"
+                                controllable
+                                fullWidth
+                                required
+                                options={titleOptions}
+                                className={classes.comboBox}
+                                value={complaintTitle ? complaintTitle.tittle: null}
+                                onChange={(newValue) => {
+                                    onFieldChange('title', newValue);
+                                }}
+                                label={titleLabel}
+                                optionSelectedLabel="tittle"
+                            />
+                        }
                     </Grid>
                     <Grid item xs={6}>
-                        <Autocomplete
-                            id="combo-box-2"
-                            options={deparmentOptions}
-                            className={classes.comboBox}
-                            renderInput={(params) => <TextField {...params} label="Seleccione un departamento" variant="outlined" />}
-                            value={department}
-                            onChange={(event, newValue) => {
-                                onFieldChange('department', newValue);
-                            }}
-                        />
+                        {!edit &&
+                            <ComboBox
+                                id="department-combo-box-2"
+                                onChange={(value) => onFieldChange('department', value)}
+                                options={deparmentOptions}
+                                normalComboBox
+                                className={classes.comboBox}
+                                fullWidth
+                                required
+                                variant="outlined"
+                                label="Seleccione un departamento"
+                                optionLabel="departmentName"
+                            />
+                        }
+                        {edit &&
+                            <ComboBox
+                                id="combo-box-2"
+                                controllable
+                                fullWidth
+                                required
+                                options={deparmentOptions}
+                                className={classes.comboBox}
+                                value={department ? department.departmentName: null}
+                                onChange={(newValue) => {
+                                    onFieldChange('department', newValue);
+                                }}
+                                optionSelectedLabel="departmentName"
+                                label="Seleccione un departamento"
+                            />
+                        }
                     </Grid>
                     <Grid item xs={12}>
                         <Paper

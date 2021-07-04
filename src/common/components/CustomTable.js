@@ -19,6 +19,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import SearchIcon from '@material-ui/icons/Search';
 import TextField from '@material-ui/core/TextField';
+import PropTypes from 'prop-types';
 
 const lightColor = '#009be5';
 
@@ -75,7 +76,7 @@ const styles = (theme) => ({
   }
 });
 
-function CustomTable({ classes, columns, rows, deleteRequest, addButtonText, history, redirect, editRedirect, NotFoundMessage, response }) {
+function CustomTable({ classes, columns, rows, deleteRequest, addButtonText, history, redirect, editRedirect, NotFoundMessage, response, showButton }) {
   return (
     <React.Fragment>
       <Paper className={classes.paper}>
@@ -118,7 +119,9 @@ function CustomTable({ classes, columns, rows, deleteRequest, addButtonText, his
               {columns.map((column)=> (
                 <StyledTableCell align="left" key={column}>{column}</StyledTableCell>
               ))}
-              <StyledTableCell align="left"></StyledTableCell>
+              {showButton &&
+                <StyledTableCell align="left"></StyledTableCell>
+              }
             </TableRow>
           </TableHead>
           <TableBody>
@@ -134,48 +137,50 @@ function CustomTable({ classes, columns, rows, deleteRequest, addButtonText, his
               return (
                 <StyledTableRow key={row.get('id')}>
                     {dataRow.map((val) => val)}
-                  <StyledTableCell align="left">
-                    <div className={classes.root}>
-                      <Grid container>
-                        {response && 
-                          <Grid item xs={12}>
-                            <Button
-                              variant="contained"
-                              className={`${classes.button} ${classes.updateTheme}`}
-                              startIcon={<AddIcon />}
-                              onClick={() => history.push(editRedirect + `/${row.get('id')}`)}
-                            >
-                              Responder
-                            </Button>
-                          </Grid>
-                        }
-                        {!response &&
-                          <React.Fragment>
-                            <Grid item xs={6}>
-                                <Button
-                                  variant="contained"
-                                  className={`${classes.button} ${classes.deleteTheme}`}
-                                  startIcon={<DeleteIcon />}
-                                  onClick={() => deleteRequest(row.get('id'))}
-                                >
-                                  Borrar
-                                </Button>
-                            </Grid>
-                            <Grid item xs={6}>
+                  {showButton && 
+                    <StyledTableCell align="left">
+                      <div className={classes.root}>
+                        <Grid container>
+                          {response &&
+                            <Grid item xs={12}>
                               <Button
-                                  variant="contained"
-                                  className={`${classes.button} ${classes.updateTheme}`}
-                                  startIcon={<CreateIcon />}
-                                  onClick={() => history.push(editRedirect + `/${row.get('id')}`)}
-                                >
-                                Editar
+                                variant="contained"
+                                className={`${classes.button} ${classes.updateTheme}`}
+                                startIcon={<AddIcon />}
+                                onClick={() => history.push(editRedirect + `/${row.get('id')}`)}
+                              >
+                                Responder
                               </Button>
                             </Grid>
-                        </React.Fragment>
-                        }
-                      </Grid>
-                    </div>
-                  </StyledTableCell>
+                          }
+                          {!response &&
+                            <React.Fragment>
+                              <Grid item xs={6}>
+                                  <Button
+                                    variant="contained"
+                                    className={`${classes.button} ${classes.deleteTheme}`}
+                                    startIcon={<DeleteIcon />}
+                                    onClick={() => deleteRequest(row.get('id'))}
+                                  >
+                                    Borrar
+                                  </Button>
+                              </Grid>
+                              <Grid item xs={6}>
+                                <Button
+                                    variant="contained"
+                                    className={`${classes.button} ${classes.updateTheme}`}
+                                    startIcon={<CreateIcon />}
+                                    onClick={() => history.push(editRedirect + `/${row.get('id')}`)}
+                                  >
+                                  Editar
+                                </Button>
+                              </Grid>
+                          </React.Fragment>
+                          }
+                        </Grid>
+                      </div>
+                    </StyledTableCell>
+                  }
                 </StyledTableRow>
               )
             })}
@@ -191,6 +196,14 @@ function CustomTable({ classes, columns, rows, deleteRequest, addButtonText, his
       </TableContainer>
     </React.Fragment>
   );
+}
+
+CustomTable.propTypes = {
+  showButton: PropTypes.bool
+}
+
+CustomTable.defaultProps = {
+  showButton: true,
 }
 
 export default compose(withRouter, withStyles(styles))(CustomTable);

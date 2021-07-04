@@ -39,9 +39,6 @@ class CreateComplaint extends React.Component {
             title: null,
             department: null,
             description: '',
-            titleId: null,
-            departmentId: null,
-            complaint: null,
         }
 
         this.onFieldChange = this.onFieldChange.bind(this);
@@ -64,18 +61,17 @@ class CreateComplaint extends React.Component {
     }
 
     onSubmit(){
+        const { title, department, description } = this.state;
         const idPerson = this.props.authUser.id;
-        const idDeparment = this.props.allDepartments.find((department) => department.departmentName === this.state.department)
-        const date = '20000101';
-        const idComplaint = this.props.complaintsTitle.find((complain) => complain.tittle === this.state.title)
+        const date = new Date().toISOString();
         
         const data = {
             idPerson: idPerson,
-            idDepartment: idDeparment.id,
-            date: date,
-            description: this.state.description,
-            idComplainType: idComplaint.id,
-            idState: idComplaint.stateId
+            idDepartment: department.id,
+            date: date.replace('-', '').replace('-', '').slice(0, 8),
+            description: description,
+            idComplainType: title.id,
+            idState: title.stateId
         }
 
         this.props.createComplain(data);
@@ -83,14 +79,14 @@ class CreateComplaint extends React.Component {
 
     render(){
         const { complaintsTitle, allDepartments, error } = this.props
-        const { title, department, description, complaint } = this.state
+        const { title, department, description, } = this.state
 
         return(
             <ComplaintReclaimBody
-                titleOptions={complaintsTitle.map(({ tittle }) => tittle)}
+                titleOptions={complaintsTitle}
                 titleLabel="Seleccione el tipo de queja"
                 pageTitle="Crear Quejas"
-                deparmentOptions={allDepartments.map(({ departmentName }) => departmentName)}
+                deparmentOptions={allDepartments}
                 descriptions={description}
                 complaintTitle={title}
                 department={department}
