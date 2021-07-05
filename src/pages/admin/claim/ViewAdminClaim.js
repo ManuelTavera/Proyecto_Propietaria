@@ -59,7 +59,7 @@ class ViewAdminClaim extends React.Component {
                             claim.personName,
                             claim.date,
                             claim.departmentName,
-                            claim.complainTypeName,
+                            claim.claimTypeName,
                             claim.description,
                             claim.id
                         )

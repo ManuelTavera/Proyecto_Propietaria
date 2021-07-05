@@ -3,22 +3,22 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
-import { getClaimsAnswer, getComplainsAnswer } from '../../../common/store/actions/answer/answer.actions';
-import { getClaimAnswer, getComplaintAnswer, getAnswerError } from '../../../common/store/selectors/answer.selector';
-
+import { getClaimsAnswer, getComplainsAnswer } from '../../common/store/actions/answer/answer.actions';
+import { getClaimAnswer, getComplaintAnswer, getAnswerError } from '../../common/store/selectors/answer.selector';
+import { getAuthUser } from '../../common/store/selectors/user.selector';
 import AppBar from '@material-ui/core/AppBar';
 import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
 import Box from '@material-ui/core/Box';
-import CustomTable from '../../../common/components/CustomTable';
+import CustomTable from '../../common/components/CustomTable';
 
 function mapDispatchToProps(dispatch){
     return {
-        getClaimsAnswer: () => {
-            dispatch(getClaimsAnswer())
+        getClaimsAnswer: (data) => {
+            dispatch(getClaimsAnswer(data))
         },
-        getComplainsAnswer: () => {
-            dispatch(getComplainsAnswer())
+        getComplainsAnswer: (data) => {
+            dispatch(getComplainsAnswer(data))
         }
     }
 }
@@ -27,7 +27,8 @@ function mapStateToProps(state){
     return {
         claims: getClaimAnswer(state),
         complaints: getComplaintAnswer(state),
-        answerError: getAnswerError(state)
+        answerError: getAnswerError(state),
+        user: getAuthUser(state),
     }
 }
 
@@ -83,7 +84,7 @@ function createData(employee, user, date, department, response, id){
     return dataRow;
 }
 
-class AdminViewResponse extends React.Component {
+class ViewResponse extends React.Component {
     constructor(props){
         super(props);
 
@@ -95,7 +96,7 @@ class AdminViewResponse extends React.Component {
     }
 
     componentDidMount(){
-        this.props.getClaimsAnswer();
+        this.props.getClaimsAnswer(this.props.user.id);
         // This gets launched but in the epic
         // this.props.getComplainsAnswer();
     }
@@ -137,7 +138,6 @@ class AdminViewResponse extends React.Component {
                             )
                         })}
                         response
-                        editRedirect="/admin/response/claim"
                         NotFoundMessage="No se han registrado respuestas de queja"
                     />
                 </TabPanel>
@@ -156,7 +156,6 @@ class AdminViewResponse extends React.Component {
                             )
                         })}
                         response
-                        editRedirect="/admin/response/complaint"
                         NotFoundMessage="No se han registrado respuestas de reclamación"
                     />
                 </TabPanel>
@@ -165,4 +164,4 @@ class AdminViewResponse extends React.Component {
     }
 }
 
-export default compose(connect(mapStateToProps, mapDispatchToProps), withStyles(styles))(AdminViewResponse)
+export default compose(connect(mapStateToProps, mapDispatchToProps), withStyles(styles))(ViewResponse)

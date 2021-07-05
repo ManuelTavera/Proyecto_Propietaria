@@ -16,6 +16,7 @@ import BusinessIcon from '@material-ui/icons/Business';
 import PriorityHighIcon from '@material-ui/icons/PriorityHigh';
 import BallotIcon from '@material-ui/icons/Ballot';
 import RateReviewIcon from '@material-ui/icons/RateReview';
+import ChatIcon from '@material-ui/icons/Chat';
 import { getAuthUser } from '../store/selectors/user.selector';
 
 function mapStateToProps(state) {
@@ -34,7 +35,16 @@ const adminCategories = [
       { id: 'Respuestas', icon: <RateReviewIcon/>, route: '/admin/response' },
     ]
   }
-]
+];
+
+const userRoutes = [
+  {
+    id: 'Solicitudes',
+    children: [
+      { id: 'Respuestas', icon: <ChatIcon />, route: '/response' },
+    ]
+  }
+];
 
 const styles = (theme) => ({
   categoryHeader: {
@@ -80,7 +90,8 @@ const styles = (theme) => ({
 function SideBar(props) {
   const { classes, authUser, ...other } = props;
 
-  const categories = authUser.user.userType === 3 ? adminCategories: [];
+  const categories = authUser.user.userType === 3 ? adminCategories: userRoutes;
+  const homeRoute = authUser.user.userType === 3 ? '/admin/home': '/home';
 
   return (
     <Drawer variant="permanent" {...other}>
@@ -88,7 +99,11 @@ function SideBar(props) {
         <ListItem className={clsx(classes.firebase, classes.item, classes.itemCategory)}>
           Application
         </ListItem>
-        <ListItem className={clsx(classes.item, classes.itemCategory)}>
+        <ListItem 
+          className={clsx(classes.item, classes.itemCategory)}
+          component={Link} 
+          to={homeRoute}
+        >
           <ListItemIcon className={classes.itemIcon}>
             <HomeIcon />
           </ListItemIcon>

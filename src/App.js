@@ -19,6 +19,7 @@ import ViewAdminComplaint from './pages/admin/complaint/ViewAdminComplaint';
 import ResponseClaim from './pages/admin/claim/ResponseClaim';
 import ResponseComplaint from './pages/admin/complaint/ResponseComplaint';
 import AdminViewResponse from './pages/admin/response/AdminViewResponse';
+import ViewResponse from './pages/response/ViewResponse';
 import Drawer from './common/components/Drawer';
 
 class App extends React.Component{
@@ -54,6 +55,7 @@ class App extends React.Component{
                 <Route path="/edit/complaint/:complaintId" component={EditComplaint}/>
                 <Route path="/create/claim" component={CreateClaim}/>
                 <Route path="/edit/claim/:claimId" component={EditClaim}/>
+                <Route path="/response" component={ViewResponse}/>
               </Drawer>
             }
           />
