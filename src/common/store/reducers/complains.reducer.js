@@ -8,6 +8,9 @@ export const complainsInitialState = Object.seal({
     complainsTitle: [],
     complainUpdated: false,
     complainCreated: false,
+    complainTypeCreated: false,
+    complainTypeUpdated: false,
+    complaintTypeDeleted: false,
 })
 
 export const complainsReducer = (state = complainsInitialState, action) => {
@@ -87,6 +90,51 @@ export const complainsReducer = (state = complainsInitialState, action) => {
         }
         case complainsActionsLabels.CREATE_COMPLAIN_FAILURE: {
             const newStateObject = Object.assign({}, { complainCreated: false, error: action.payload ? action.payload.error: 'Error de servidor' })
+            newState = merge(state, newStateObject);
+            break;
+        }
+        case complainsActionsLabels.CREATE_COMPLAINT_TYPE: {
+            const newStateObject = Object.assign({}, { complainTypeCreated: false, error: null })
+            newState = merge(state, newStateObject);
+            break;
+        }
+        case complainsActionsLabels.CREATE_COMPLAINT_TYPE_SUCCESS: {
+            const newStateObject = Object.assign({}, { complainTypeCreated: true, error: null })
+            newState = merge(state, newStateObject);
+            break;
+        }
+        case complainsActionsLabels.CREATE_COMPLAINT_TYPE_FAILURE: {
+            const newStateObject = Object.assign({}, { complainTypeCreated: false, error: 'Ha ocurrido un error creando el tipo de Queja' })
+            newState = merge(state, newStateObject);
+            break;
+        }
+        case complainsActionsLabels.UPDATE_COMPLAINT_TYPE: {
+            const newStateObject = Object.assign({}, { complainTypeUpdated: false, error: null })
+            newState = merge(state, newStateObject);
+            break;
+        }
+        case complainsActionsLabels.UPDATE_COMPLAINT_TYPE_SUCCESS: {
+            const newStateObject = Object.assign({}, { complainTypeUpdated: true, error: null })
+            newState = merge(state, newStateObject);
+            break;
+        }
+        case complainsActionsLabels.UPDATE_COMPLAINT_TYPE_FAILURE: {
+            const newStateObject = Object.assign({}, { complainTypeUpdated: false, error: 'Ha ocurrido un error editando el tipo de Queja' })
+            newState = merge(state, newStateObject);
+            break;
+        }
+        case complainsActionsLabels.DELETE_COMPLAINT_TYPE: {
+            const newStateObject = Object.assign({}, { complaintTypeDeleted: false, error: null })
+            newState = merge(state, newStateObject);
+            break;
+        }
+        case complainsActionsLabels.DELETE_COMPLAINT_TYPE_SUCCESS: {
+            const newStateObject = Object.assign({}, { complaintTypeDeleted: true, error: null })
+            newState = merge(state, newStateObject);
+            break;
+        }
+        case complainsActionsLabels.DELETE_COMPLAINT_TYPE_FAILURE: {
+            const newStateObject = Object.assign({}, { complaintTypeDeleted: false, error: 'Ha ocurrido un error borrando el tipo de Queja' })
             newState = merge(state, newStateObject);
             break;
         }

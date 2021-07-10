@@ -74,3 +74,36 @@ export const createEpicClaimEpic = (action$, store) =>
             )  
         )
     )
+
+export const createClaimTypeEpic = (action$, store) =>
+    action$.pipe(
+        ofType(claimsActionsLabels.CREATE_CLAIM_TYPE),
+        mergeMap(action => 
+            claimsRequest.createClaimsTypeRequest(action.payload).pipe(
+                map(response => claimsActions.createTypeClaimSuccess(response.response)),
+                catchError(error => of(claimsActions.createTypeClaimFailure(error.response)))
+            )
+        )
+    )
+
+export const updateClaimTypeEpic = (action$, store) =>
+    action$.pipe(
+        ofType(claimsActionsLabels.UPDATE_CLAIM_TYPE),
+        mergeMap(action => 
+            claimsRequest.updateClaimsTypeRequest(action.payload).pipe(
+                map(response => claimsActions.updateTypeClaimSuccess(response.response)),
+                catchError(error => of(claimsActions.updateTypeClaimFailure(error.response)))
+            )
+        )
+    )
+
+export const deleteClaimTypeEpic = (action$, store) =>
+    action$.pipe(
+        ofType(claimsActionsLabels.DELETE_CLAIM_TYPE),
+        mergeMap(action => 
+            claimsRequest.deleteClaimsTypeRequest(action.payload).pipe(
+                map(response => claimsActions.deleteTypeClaimSuccess(response.response)),
+                catchError(error => of(claimsActions.deleteTypeClaimFailure(error.response)))
+            )
+        )
+    )

@@ -17,6 +17,7 @@ import PriorityHighIcon from '@material-ui/icons/PriorityHigh';
 import BallotIcon from '@material-ui/icons/Ballot';
 import RateReviewIcon from '@material-ui/icons/RateReview';
 import ChatIcon from '@material-ui/icons/Chat';
+import DescriptionIcon from '@material-ui/icons/Description';
 import { getAuthUser } from '../store/selectors/user.selector';
 
 function mapStateToProps(state) {
@@ -33,6 +34,8 @@ const adminCategories = [
       { id: 'Quejas', icon: <PriorityHighIcon/>, route: '/admin/complaint' },
       { id: 'Reclamación', icon: <BallotIcon/>, route: '/admin/claim' },
       { id: 'Respuestas', icon: <RateReviewIcon/>, route: '/admin/response' },
+      { id: 'Tipos de reclamaciones', icon: <DescriptionIcon/>, route: '/admin/claimType' },
+      { id: 'Tipo de quejas', icon: <DescriptionIcon/>, route: '/admin/complaintType' }
     ]
   }
 ];

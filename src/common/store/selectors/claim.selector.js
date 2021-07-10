@@ -4,3 +4,6 @@ export const getClaimDeleted = state => state.claimsReducer.claimDeleted;
 export const getClaimUpdated = state => state.claimsReducer.claimUpdated;
 export const getClaimsTitle = state => state.claimsReducer.claimsTitle;
 export const getClaimsCreated = state => state.claimsReducer.claimCreated;
+export const getClaimTypeCreated = state => state.claimsReducer.claimTypeCreated;
+export const getClaimTypeUpdated = state => state.claimsReducer.claimTypeUpdated;
+export const getClaimTypeDeleted = state => state.claimsReducer.claimTypeDeleted;

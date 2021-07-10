@@ -78,3 +78,48 @@ export const createComplainFailure = (error) => ({
     type: complainsActionsLabels.CREATE_COMPLAIN_FAILURE,
     payload: error
 })
+
+export const createTypeComplaint = (data) => ({
+    type: complainsActionsLabels.CREATE_COMPLAINT_TYPE,
+    payload: data
+})
+
+export const createTypeComplaintSuccess = (response) => ({
+    type: complainsActionsLabels.CREATE_COMPLAINT_TYPE_SUCCESS,
+    payload: response
+})
+
+export const createTypeComplaintFailure = (error) => ({
+    type: complainsActionsLabels.CREATE_COMPLAINT_TYPE_FAILURE,
+    payload: error
+})
+
+export const updateTypeComplaint = (data) => ({
+    type: complainsActionsLabels.UPDATE_COMPLAINT_TYPE,
+    payload: data
+})
+
+export const updateTypeComplaintSuccess = (response) => ({
+    type: complainsActionsLabels.UPDATE_COMPLAINT_TYPE_SUCCESS,
+    payload: response
+})
+
+export const updateTypeComplaintFailure = (error) => ({
+    type: complainsActionsLabels.UPDATE_COMPLAINT_TYPE_FAILURE,
+    payload: error
+})
+
+export const deleteTypeComplaint = (data) => ({
+    type: complainsActionsLabels.DELETE_COMPLAINT_TYPE,
+    payload: data
+})
+
+export const deleteTypeComplaintSuccess = (response) => ({
+    type: complainsActionsLabels.DELETE_COMPLAINT_TYPE_SUCCESS,
+    payload: response
+})
+
+export const deleteTypeComplaintFailure = (error) => ({
+    type: complainsActionsLabels.DELETE_COMPLAINT_TYPE_FAILURE,
+    payload: error
+})
