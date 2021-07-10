@@ -46,7 +46,7 @@ export const getClaimsTitleEpic = (action$, store) =>
     action$.pipe(
         ofType(claimsActionsLabels.GET_CLAIMS_TITLE),
         mergeMap( action => 
-            claimsRequest.getClaimsTitleRequest().pipe(
+            claimsRequest.getClaimsTitleRequest(action.payload).pipe(
                 map(response => claimsActions.getClaimsTitleSuccess(response.response)),
                 catchError(error => of(claimsActions.getClaimsTitleFailure(error.response)))
             )

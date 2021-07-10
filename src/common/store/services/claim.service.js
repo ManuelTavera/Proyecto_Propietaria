@@ -17,8 +17,8 @@ export function deleteClaimRequest(id){
     return del(`api/claim/eliminar/${id}`);
 }
 
-export function getClaimsTitleRequest(){
-    return get('api/claimType/mostrar');
+export function getClaimsTitleRequest(id = ''){
+    return get(`api/claimType/mostrar/${id}`);
 }
 
 export function createClaimsTypeRequest(data){

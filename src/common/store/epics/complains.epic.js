@@ -47,7 +47,7 @@ export const getComplainsTitleEpic = (action$, store) =>
     action$.pipe(
         ofType(complainsActionsLabels.GET_COMPLAINS_TITLE),
         mergeMap(action => 
-            complainsRequest.getComplainsTitleRequest().pipe(
+            complainsRequest.getComplainsTitleRequest(action.payload).pipe(
                 mergeMap(response => of(complainsActions.getComplainsTitleSuccess(response.response), departmentActions.getDepartments())),
                 catchError(error => of(complainsActions.getComplainsTitleFailure(error.response)))
             )

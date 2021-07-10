@@ -35,8 +35,9 @@ export const deleteClaimFailure = (error) => ({
     payload: error
 })
 
-export const getClaimsTitle = () => ({
-    type: claimsActionsLabels.GET_CLAIMS_TITLE
+export const getClaimsTitle = (id = '') => ({
+    type: claimsActionsLabels.GET_CLAIMS_TITLE,
+    payload: id,
 })
 
 export const getClaimsTitleSuccess = (response) => ({

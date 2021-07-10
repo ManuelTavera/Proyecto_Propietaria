@@ -131,7 +131,8 @@ export const claimsReducer = (state = claimsInitialState, action) => {
             break;
         }
         case claimsActionsLabels.DELETE_CLAIM_TYPE_SUCCESS: {
-            const newStateObject = Object.assign({}, { claimTypeDeleted: true, error: null })
+            const newClaimType = state.claimsTitle.filter((claimType) => claimType.id !== action.payload);
+            const newStateObject = Object.assign({}, { claimTypeDeleted: true, error: null, claimsTitle: newClaimType })
             newState = merge(state, newStateObject);
             break;
         }

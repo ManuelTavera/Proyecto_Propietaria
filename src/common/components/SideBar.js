@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { withRouter } from "react-router";
 import clsx from 'clsx';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -91,7 +92,7 @@ const styles = (theme) => ({
 });
 
 function SideBar(props) {
-  const { classes, authUser, ...other } = props;
+  const { classes, authUser, location, ...other } = props;
 
   const categories = authUser.user.userType === 3 ? adminCategories: userRoutes;
   const homeRoute = authUser.user.userType === 3 ? '/admin/home': '/home';
@@ -129,11 +130,11 @@ function SideBar(props) {
                 {id}
               </ListItemText>
             </ListItem>
-            {children.map(({ id: childId, icon, route, active }) => (
+            {children.map(({ id: childId, icon, route }) => (
               <ListItem
                 key={childId}
                 button
-                className={clsx(classes.item, active && classes.itemActiveItem)}
+                className={clsx(classes.item, location.pathname == route && classes.itemActiveItem)}
                 component={Link}
                 to={route}
               >
@@ -160,4 +161,4 @@ SideBar.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default compose(connect(mapStateToProps), withStyles(styles))(SideBar);
+export default compose(withRouter, connect(mapStateToProps), withStyles(styles))(SideBar);

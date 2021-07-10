@@ -17,8 +17,8 @@ export function deleteComplainRequest(id){
     return del(`api/complain/eliminar/${id}`);
 }
 
-export function getComplainsTitleRequest(){
-    return get('api/complainType/Mostrar');
+export function getComplainsTitleRequest(id = ''){
+    return get(`api/complainType/Mostrar/${id}`);
 }
 
 export function createComplainTypeRequest(data){

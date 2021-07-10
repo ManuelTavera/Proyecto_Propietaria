@@ -21,7 +21,9 @@ import ResponseComplaint from './pages/admin/complaint/ResponseComplaint';
 import AdminViewResponse from './pages/admin/response/AdminViewResponse';
 import ViewResponse from './pages/response/ViewResponse';
 import Drawer from './common/components/Drawer';
-
+import ViewAdminClaimType from './pages/admin/claimType/ViewAdminClaimType';
+import CreateClaimType from './pages/admin/claimType/CreateClaimType';
+import EditClaimType from './pages/admin/claimType/EditClaimType';
 class App extends React.Component{
   constructor(props){
     super(props);
@@ -46,6 +48,9 @@ class App extends React.Component{
                 <Route path="/admin/claim/response/:claimId" component={ResponseClaim}/>
                 <Route path="/admin/complaint/response/:complaintId" component={ResponseComplaint}/>
                 <Route path="/admin/response" component={AdminViewResponse}/>
+                <Route exact path="/admin/claimType" component={ViewAdminClaimType}/>
+                <Route path="/admin/claimType/create" component={CreateClaimType}/>
+                <Route path="/admin/claimType/edit/:claimTypeId" component={EditClaimType}/>
               </Drawer>
             }
             publicRoutes={
