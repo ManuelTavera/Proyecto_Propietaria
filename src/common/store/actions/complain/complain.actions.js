@@ -35,8 +35,9 @@ export const deleteComplainFailure = (error) => ({
     payload: error
 })
 
-export const getComplainsTitle = () => ({
-    type: complainsActionsLabels.GET_COMPLAINS_TITLE
+export const getComplainsTitle = (id = '') => ({
+    type: complainsActionsLabels.GET_COMPLAINS_TITLE,
+    payload: id,
 })
 
 export const getComplainsTitleSuccess = (response) => ({

@@ -24,6 +24,10 @@ import Drawer from './common/components/Drawer';
 import ViewAdminClaimType from './pages/admin/claimType/ViewAdminClaimType';
 import CreateClaimType from './pages/admin/claimType/CreateClaimType';
 import EditClaimType from './pages/admin/claimType/EditClaimType';
+import ViewAdminComplaintType from './pages/admin/complaintType/ViewAdminComplaintType';
+import CreateComplaintType from './pages/admin/complaintType/CreateComplaintType';
+import EditComplaintType from './pages/admin/complaintType/EditComplaintType';
+
 class App extends React.Component{
   constructor(props){
     super(props);
@@ -51,6 +55,9 @@ class App extends React.Component{
                 <Route exact path="/admin/claimType" component={ViewAdminClaimType}/>
                 <Route path="/admin/claimType/create" component={CreateClaimType}/>
                 <Route path="/admin/claimType/edit/:claimTypeId" component={EditClaimType}/>
+                <Route exact path="/admin/complaintType" component={ViewAdminComplaintType} />
+                <Route path="/admin/complaintType/create" component={CreateComplaintType} />
+                <Route path="/admin/complaintType/edit/:complaintTypeId" component={EditComplaintType}/>
               </Drawer>
             }
             publicRoutes={

@@ -49,7 +49,7 @@ export const complainsReducer = (state = complainsInitialState, action) => {
             break;
         }
         case complainsActionsLabels.GET_COMPLAINS_TITLE: {
-            const newStateObject = Object.assign({}, { error: null });
+            const newStateObject = Object.assign({}, { error: null, complainsTitle: [] });
             newState = merge(state, newStateObject);
             break;
         }
@@ -129,7 +129,8 @@ export const complainsReducer = (state = complainsInitialState, action) => {
             break;
         }
         case complainsActionsLabels.DELETE_COMPLAINT_TYPE_SUCCESS: {
-            const newStateObject = Object.assign({}, { complaintTypeDeleted: true, error: null })
+            const newComplainsTypes = state.complainsTitle.filter((complainType) => complainType.id !== action.payload)
+            const newStateObject = Object.assign({}, { complaintTypeDeleted: true, error: null, complainsTitle: newComplainsTypes })
             newState = merge(state, newStateObject);
             break;
         }
