@@ -123,6 +123,11 @@ class App extends React.Component {
             <Route exact path="/" component={Login} />
             <Route path="/sign-up" component={SignUp} />
             <Route path="/sign-in" component={SignIn} />
+            <Redirect
+              to={{
+                pathname: "/",
+              }}
+            />
           </Switch>
         }
         history={history}

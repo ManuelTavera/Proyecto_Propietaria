@@ -11,6 +11,7 @@ export const rootEpic = combineEpics(
   userEpics.createUserEpic,
   userEpics.getAllEmployeesEpic,
   userEpics.redirectUserFromLoginEpic,
+  userEpics.logOutUserEpic,
   complainsEpic.getComplainsEpic,
   complainsEpic.deleteComplainEpic,
   complainsEpic.getComplainsTitleEpic,

@@ -8,7 +8,7 @@ import { ofType } from "redux-observable";
 import * as userActions from "../actions/SignIn/user.actions";
 import * as userActionsLabels from "../actions/SignIn/user.actions.enum";
 import * as userRequests from "../services/user.service";
-import { saveToLocalStorage } from "../localStorage";
+import { saveToLocalStorage, removeItem } from "../localStorage";
 
 export const authUserEpic = (action$, store) =>
   action$.pipe(
@@ -63,4 +63,13 @@ export const getAllEmployeesEpic = (action$, store) =>
         catchError((error) => of(userActions.getEmployeesFailure(error)))
       )
     )
+  );
+
+export const logOutUserEpic = (action$, store) =>
+  action$.pipe(
+    ofType(userActionsLabels.LOGOUT_USER),
+    tap(() => {
+      removeItem("authUser");
+    }),
+    ignoreElements()
   );

@@ -97,6 +97,11 @@ export const userReducer = (state = userInitialState, action) => {
       newState = merge(state, newStateObject);
       break;
     }
+    case userActionsLabels.LOGOUT_USER: {
+      const newStateObject = Object.assign({}, { authUser: null });
+      newState = merge(state, newStateObject);
+      break;
+    }
     default:
       break;
   }
