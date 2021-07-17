@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { withRouter } from "react-router";
 import clsx from 'clsx';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -16,6 +17,8 @@ import BusinessIcon from '@material-ui/icons/Business';
 import PriorityHighIcon from '@material-ui/icons/PriorityHigh';
 import BallotIcon from '@material-ui/icons/Ballot';
 import RateReviewIcon from '@material-ui/icons/RateReview';
+import ChatIcon from '@material-ui/icons/Chat';
+import DescriptionIcon from '@material-ui/icons/Description';
 import { getAuthUser } from '../store/selectors/user.selector';
 
 function mapStateToProps(state) {
@@ -32,9 +35,20 @@ const adminCategories = [
       { id: 'Quejas', icon: <PriorityHighIcon/>, route: '/admin/complaint' },
       { id: 'Reclamación', icon: <BallotIcon/>, route: '/admin/claim' },
       { id: 'Respuestas', icon: <RateReviewIcon/>, route: '/admin/response' },
+      { id: 'Tipos de reclamaciones', icon: <DescriptionIcon/>, route: '/admin/claimType' },
+      { id: 'Tipo de quejas', icon: <DescriptionIcon/>, route: '/admin/complaintType' }
     ]
   }
-]
+];
+
+const userRoutes = [
+  {
+    id: 'Solicitudes',
+    children: [
+      { id: 'Respuestas', icon: <ChatIcon />, route: '/response' },
+    ]
+  }
+];
 
 const styles = (theme) => ({
   categoryHeader: {
@@ -78,9 +92,10 @@ const styles = (theme) => ({
 });
 
 function SideBar(props) {
-  const { classes, authUser, ...other } = props;
+  const { classes, authUser, location, ...other } = props;
 
-  const categories = authUser.user.userType === 3 ? adminCategories: [];
+  const categories = authUser.user.userType === 3 ? adminCategories: userRoutes;
+  const homeRoute = authUser.user.userType === 3 ? '/admin/home': '/home';
 
   return (
     <Drawer variant="permanent" {...other}>
@@ -88,7 +103,11 @@ function SideBar(props) {
         <ListItem className={clsx(classes.firebase, classes.item, classes.itemCategory)}>
           Application
         </ListItem>
-        <ListItem className={clsx(classes.item, classes.itemCategory)}>
+        <ListItem 
+          className={clsx(classes.item, classes.itemCategory)}
+          component={Link} 
+          to={homeRoute}
+        >
           <ListItemIcon className={classes.itemIcon}>
             <HomeIcon />
           </ListItemIcon>
@@ -111,11 +130,11 @@ function SideBar(props) {
                 {id}
               </ListItemText>
             </ListItem>
-            {children.map(({ id: childId, icon, route, active }) => (
+            {children.map(({ id: childId, icon, route }) => (
               <ListItem
                 key={childId}
                 button
-                className={clsx(classes.item, active && classes.itemActiveItem)}
+                className={clsx(classes.item, location.pathname == route && classes.itemActiveItem)}
                 component={Link}
                 to={route}
               >
@@ -142,4 +161,4 @@ SideBar.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default compose(connect(mapStateToProps), withStyles(styles))(SideBar);
+export default compose(withRouter, connect(mapStateToProps), withStyles(styles))(SideBar);

@@ -81,7 +81,7 @@ class ResponseClaim extends React.Component {
                     <ResponseBody
                         redirect="/admin/claim"
                         pageTitle="Responder reclamación"
-                        titleType={claimInfo.complainTypeName}
+                        titleType={claimInfo.claimTypeName}
                         department={claimInfo.departmentName}
                         description={claimInfo.description}
                         onChange={this.onChange}

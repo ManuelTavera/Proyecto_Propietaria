@@ -4,3 +4,6 @@ export const complainDeleted = state => state.complainsReducer.complainDeleted;
 export const getComplainsTitle = state => state.complainsReducer.complainsTitle;
 export const getComplainsUpdated = state => state.complainsReducer.complainUpdated;
 export const getComplainCreated = state => state.complainsReducer.complainCreated;
+export const getComplainTypeCreated = state => state.complainsReducer.complainTypeCreated;
+export const getComplainTypeUpdated = state => state.complainsReducer.complainTypeUpdated;
+export const getComplainTypeDeleted = state => state.complainsReducer.complaintTypeDeleted;

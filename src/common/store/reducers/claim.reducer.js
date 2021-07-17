@@ -9,6 +9,9 @@ export const claimsInitialState = Object.seal({
     claimsTitle: [],
     claimUpdated: false,
     claimCreated: false,
+    claimTypeCreated: false,
+    claimTypeUpdated: false,
+    claimTypeDeleted: false,
 })
 
 export const claimsReducer = (state = claimsInitialState, action) => {
@@ -89,6 +92,52 @@ export const claimsReducer = (state = claimsInitialState, action) => {
         }
         case claimsActionsLabels.CREATE_CLAIM_FAILURE: {
             const newStateObject = Object.assign({}, { claimCreated: false, error: action.payload ? action.payload.errors.message: 'Error de servidor' })
+            newState = merge(state, newStateObject);
+            break;
+        }
+        case claimsActionsLabels.CREATE_CLAIM_TYPE: {
+            const newStateObject = Object.assign({}, { claimTypeCreated: false, error: null })
+            newState = merge(state, newStateObject);
+            break;
+        }
+        case claimsActionsLabels.CREATE_CLAIM_TYPE_SUCCESS: {
+            const newStateObject = Object.assign({}, { claimTypeCreated: true, error: null })
+            newState = merge(state, newStateObject);
+            break;
+        }
+        case claimsActionsLabels.CREATE_CLAIM_TYPE_FAILURE: {
+            const newStateObject = Object.assign({}, { claimTypeCreated: false, error: 'Ha ocurrido un error creando el tipo de reclamación' })
+            newState = merge(state, newStateObject);
+            break;
+        }
+        case claimsActionsLabels.UPDATE_CLAIM_TYPE: {
+            const newStateObject = Object.assign({}, { claimTypeUpdated: false, error: null })
+            newState = merge(state, newStateObject);
+            break;
+        }
+        case claimsActionsLabels.UPDATE_CLAIM_TYPE_SUCCESS: {
+            const newStateObject = Object.assign({}, { claimTypeUpdated: true, error: null })
+            newState = merge(state, newStateObject);
+            break;
+        }
+        case claimsActionsLabels.UPDATE_CLAIM_TYPE_FAILURE: {
+            const newStateObject = Object.assign({}, { claimTypeUpdated: false, error: 'Ha ocurrido un error editando el tipo de reclamación' })
+            newState = merge(state, newStateObject);
+            break;
+        }
+        case claimsActionsLabels.DELETE_CLAIM_TYPE: {
+            const newStateObject = Object.assign({}, { claimTypeDeleted: false, error: null })
+            newState = merge(state, newStateObject);
+            break;
+        }
+        case claimsActionsLabels.DELETE_CLAIM_TYPE_SUCCESS: {
+            const newClaimType = state.claimsTitle.filter((claimType) => claimType.id !== action.payload);
+            const newStateObject = Object.assign({}, { claimTypeDeleted: true, error: null, claimsTitle: newClaimType })
+            newState = merge(state, newStateObject);
+            break;
+        }
+        case claimsActionsLabels.DELETE_CLAIM_TYPE_FAILURE: {
+            const newStateObject = Object.assign({}, { claimTypeDeleted: false, error: 'Ha ocurrido un error eliminando el tipo de reclamación' })
             newState = merge(state, newStateObject);
             break;
         }

@@ -36,8 +36,8 @@ export const getClaimsAnswerEpic = (action$, store) =>
         ofType(answerActionsLabels.GET_CLAIMS_ANSWER),
         mergeMap(action => 
             answerRequest.getClaimsAnswersRequest(action.payload).pipe(
-                mergeMap(response => of(answerActions.getClaimsAnswerSuccess(response.response), answerActions.getComplainsAnswer())),
-                catchError(error => of(answerActions.getClaimsAnswerFailure(error.response)))
+                mergeMap(response => of(answerActions.getClaimsAnswerSuccess(response.response), answerActions.getComplainsAnswer(action.payload))),
+                catchError(error => of(answerActions.getClaimsAnswerFailure(error.response), answerActions.getComplainsAnswer(action.payload)))
             )
         )
     )

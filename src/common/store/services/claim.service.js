@@ -1,4 +1,3 @@
-import parseBody from '../../helpers/parse-body';
 import {
     post,
     get,
@@ -18,8 +17,24 @@ export function deleteClaimRequest(id){
     return del(`api/claim/eliminar/${id}`);
 }
 
-export function getClaimsTitleRequest(){
-    return get('api/claimType/mostrar');
+export function getClaimsTitleRequest(id = ''){
+    return get(`api/claimType/mostrar/${id}`);
+}
+
+export function createClaimsTypeRequest(data){
+    const value = JSON.parse(JSON.stringify(data));
+    
+    return post('api/claimType/insertar', value);
+}
+
+export function updateClaimsTypeRequest(data){
+    const value = JSON.parse(JSON.stringify(data));
+
+    return put('api/claimType/actualizar', value);
+}
+
+export function deleteClaimsTypeRequest(id){
+    return del(`api/claimType/eliminar/${id}`);
 }
 
 export function updateClaimsRequest(data){

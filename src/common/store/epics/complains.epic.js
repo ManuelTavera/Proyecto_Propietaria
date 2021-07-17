@@ -47,9 +47,42 @@ export const getComplainsTitleEpic = (action$, store) =>
     action$.pipe(
         ofType(complainsActionsLabels.GET_COMPLAINS_TITLE),
         mergeMap(action => 
-            complainsRequest.getComplainsTitleRequest().pipe(
+            complainsRequest.getComplainsTitleRequest(action.payload).pipe(
                 mergeMap(response => of(complainsActions.getComplainsTitleSuccess(response.response), departmentActions.getDepartments())),
                 catchError(error => of(complainsActions.getComplainsTitleFailure(error.response)))
+            )
+        )
+    )
+
+export const createComplainsTypeEpic = (action$, store) =>
+    action$.pipe(
+        ofType(complainsActionsLabels.CREATE_COMPLAINT_TYPE),
+        mergeMap(action => 
+            complainsRequest.createComplainTypeRequest(action.payload).pipe(
+                map(response => complainsActions.createTypeComplaintSuccess(response.response)),
+                catchError(error => of(complainsActions.createTypeComplaintFailure(error.response)))
+            )
+        )
+    )
+
+export const updateComplainsTypeEpic = (action$, store) =>
+    action$.pipe(
+        ofType(complainsActionsLabels.UPDATE_COMPLAINT_TYPE),
+        mergeMap(action => 
+            complainsRequest.updateComplainTypeRequest(action.payload).pipe(
+                map(response => complainsActions.updateTypeComplaintSuccess(response.response)),
+                catchError(error => of(complainsActions.updateTypeComplaintFailure(error.response)))
+            )
+        )
+    )
+
+export const deleteComplainsTypeEpic = (action$, store) =>
+    action$.pipe(
+        ofType(complainsActionsLabels.DELETE_COMPLAINT_TYPE),
+        mergeMap(action => 
+            complainsRequest.deleteComplainTypeRequest(action.payload).pipe(
+                map(response => complainsActions.deleteTypeComplaintSuccess(response.response)),
+                catchError(error => of(complainsActions.deleteTypeComplaintFailure(error.response)))
             )
         )
     )

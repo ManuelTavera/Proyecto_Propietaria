@@ -35,8 +35,9 @@ export const deleteClaimFailure = (error) => ({
     payload: error
 })
 
-export const getClaimsTitle = () => ({
-    type: claimsActionsLabels.GET_CLAIMS_TITLE
+export const getClaimsTitle = (id = '') => ({
+    type: claimsActionsLabels.GET_CLAIMS_TITLE,
+    payload: id,
 })
 
 export const getClaimsTitleSuccess = (response) => ({
@@ -76,5 +77,50 @@ export const createClaimSuccess = (response) => ({
 
 export const createClaimFailure = (error) => ({
     type: claimsActionsLabels.CREATE_CLAIM_FAILURE,
+    payload: error
+})
+
+export const createTypeClaim = (data) => ({
+    type: claimsActionsLabels.CREATE_CLAIM_TYPE,
+    payload: data
+})
+
+export const createTypeClaimSuccess = (response) => ({
+    type: claimsActionsLabels.CREATE_CLAIM_TYPE_SUCCESS,
+    payload: response
+})
+
+export const createTypeClaimFailure = (error) => ({
+    type: claimsActionsLabels.CREATE_CLAIM_TYPE_FAILURE,
+    payload: error
+})
+
+export const updateTypeClaim = (data) => ({
+    type: claimsActionsLabels.UPDATE_CLAIM_TYPE,
+    payload: data
+})
+
+export const updateTypeClaimSuccess = (response) => ({
+    type: claimsActionsLabels.UPDATE_CLAIM_TYPE_SUCCESS,
+    payload: response
+})
+
+export const updateTypeClaimFailure = (error) => ({
+    type: claimsActionsLabels.UPDATE_CLAIM_TYPE_FAILURE,
+    payload: error
+})
+
+export const deleteTypeClaim = (data) => ({
+    type: claimsActionsLabels.DELETE_CLAIM_TYPE,
+    payload: data
+})
+
+export const deleteTypeClaimSuccess = (response) => ({
+    type: claimsActionsLabels.DELETE_CLAIM_TYPE_SUCCESS,
+    payload: response
+})
+
+export const deleteTypeClaimFailure = (error) => ({
+    type: claimsActionsLabels.DELETE_CLAIM_TYPE_FAILURE,
     payload: error
 })
