@@ -1,75 +1,125 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { getClaims } from '../../../common/store/actions/claim/claim.action';
-import { getAllClaims, getClaimsError } from '../../../common/store/selectors/claim.selector';
-import Box from '@material-ui/core/Box';
-import CustomTable from '../../../common/components/CustomTable';
+import React from "react";
+import { connect } from "react-redux";
+import { getClaims } from "../../../common/store/actions/claim/claim.action";
+import {
+  getAllClaims,
+  getClaimsError,
+} from "../../../common/store/selectors/claim.selector";
+import Box from "@material-ui/core/Box";
+import CustomDataGrid from "../../../common/components/CustomDataGrid";
+import Button from "@material-ui/core/Button";
+import { Link } from "react-router-dom";
 
-function mapDispatchToProps(dispatch){
-    return {
-        getClaims: (data) => {
-            dispatch(getClaims(data));
-        }
-    }
+function mapDispatchToProps(dispatch) {
+  return {
+    getClaims: (data) => {
+      dispatch(getClaims(data));
+    },
+  };
 }
 
 function mapStateToProps(state) {
-    return {
-        claims: getAllClaims(state),
-        claimsError: getClaimsError(state)
-    }
+  return {
+    claims: getAllClaims(state),
+    claimsError: getClaimsError(state),
+  };
 }
 
-const columns = [
-    "Creado por",
-    "Fecha de creación",
-    "Departamento",
-    "Tipo de reclamación",
-    "Descripción"
-];
-
-function createData(person, date, department, type, description, id){
-    let dataRow = new Map();
-    dataRow.set(columns[0], person);
-    dataRow.set(columns[1], date);
-    dataRow.set(columns[2], department);
-    dataRow.set(columns[3], type);
-    dataRow.set(columns[4], description);
-    dataRow.set('id', id);
-
-    return dataRow;
+function dataGridRow(person, date, department, type, description, id) {
+  return {
+    createdBy: person,
+    createdAt: date,
+    department,
+    type,
+    description,
+    id,
+  };
 }
 
 class ViewAdminClaim extends React.Component {
+  constructor(props) {
+    super(props);
 
-    componentDidMount(){
-        this.props.getClaims('WHERE ID_ESTADO != 6')
-    }
+    this.renderColumns = this.renderColumns.bind(this);
+  }
 
-    render(){
-        const { claims } = this.props;
+  componentDidMount() {
+    this.props.getClaims("WHERE ID_ESTADO != 6");
+  }
 
-        return(
-            <Box p={3}>
-                <CustomTable
-                    response
-                    columns={columns}
-                    rows={claims.map((claim) => {
-                        return createData(
-                            claim.personName,
-                            claim.date,
-                            claim.departmentName,
-                            claim.claimTypeName,
-                            claim.description,
-                            claim.id
-                        )
-                    })}
-                    editRedirect="/admin/claim/response"
-                    NotFoundMessage={'No se han registrado ninguna queja'}
-                />
-            </Box>
-        )
-    }
+  renderColumns() {
+    return [
+      {
+        field: "createdBy",
+        headerName: "Creado Por",
+        width: 250,
+      },
+      {
+        field: "createdAt",
+        headerName: "Fecha de creación",
+        width: 250,
+      },
+      {
+        field: "department",
+        headerName: "Departamento",
+        width: 250,
+      },
+      {
+        field: "type",
+        headerName: "Tipo de reclamación",
+        width: 250,
+      },
+      {
+        field: "description",
+        headerName: "Descripción",
+        width: 250,
+      },
+      {
+        field: "action",
+        headerName: "",
+        width: 150,
+        renderCell: (row) => (
+          <Button
+            style={{
+              backgroundColor: "rgba(94, 222, 78, 0.7)",
+              padding: "3px 35px",
+            }}
+            variant="contained"
+            color="primary"
+            component={Link}
+            to={`/admin/claim/response/${row.id}`}
+          >
+            Responder
+          </Button>
+        ),
+        disableExport: true,
+        disableColumnMenu: true,
+      },
+    ];
+  }
+
+  render() {
+    const { claims } = this.props;
+
+    return (
+      <Box p={3}>
+        <CustomDataGrid
+          rows={claims.map((claim) => {
+            return dataGridRow(
+              claim.personName,
+              claim.date,
+              claim.departmentName,
+              claim.claimTypeName,
+              claim.description,
+              claim.id
+            );
+          })}
+          columns={this.renderColumns()}
+          fileName="Reporte de reclamación de todos los usuarios"
+        />
+      </Box>
+    );
+  }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ViewAdminClaim);

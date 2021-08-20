@@ -7,6 +7,7 @@ import {
   GridToolbarExport,
   GridToolbarDensitySelector,
 } from "@material-ui/data-grid";
+import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import { Link } from "react-router-dom";
 
@@ -32,6 +33,12 @@ function CustomToolbar(props) {
   );
 }
 
+const styles = () => ({
+  root: {
+    backgroundColor: "#FFF",
+  },
+});
+
 class CustomDataGrid extends React.PureComponent {
   render() {
     const {
@@ -42,6 +49,7 @@ class CustomDataGrid extends React.PureComponent {
       createLabel,
       fileName,
       createButton,
+      classes,
     } = this.props;
 
     return (
@@ -64,6 +72,9 @@ class CustomDataGrid extends React.PureComponent {
             },
           }}
           rowsPerPageOptions={[5, 10, 15, 20]}
+          classes={{
+            root: classes.root,
+          }}
         />
       </div>
     );
@@ -74,4 +85,4 @@ CustomDataGrid.defaultProps = {
   createButton: false,
 };
 
-export default CustomDataGrid;
+export default withStyles(styles)(CustomDataGrid);
