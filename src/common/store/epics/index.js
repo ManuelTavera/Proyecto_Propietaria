@@ -39,6 +39,7 @@ export const rootEpic = combineEpics(
   answerEpics.getAnswersEpic,
   answerEpics.getClaimsAnswerEpic,
   answerEpics.getComplaintsAnswerEpic,
+  answerEpics.updateAnswerEpic,
   productEpics.createProductEpic,
   productEpics.deleteProductEpic,
   productEpics.getProductsEpic,

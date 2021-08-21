@@ -23,6 +23,7 @@ import Button from "@material-ui/core/Button";
 import { Link } from "react-router-dom";
 import DeleteIcon from "@material-ui/icons/Delete";
 import CreateIcon from "@material-ui/icons/Create";
+import CustomRating from "../../../common/components/CustomRating";
 
 function mapDispatchToProps(dispatch) {
   return {
@@ -79,7 +80,7 @@ const columns = [
   "Respuesta",
 ];
 
-function dataGridRow(employee, user, date, department, response, id) {
+function dataGridRow(employee, user, date, department, response, id, rating) {
   return {
     answerBy: employee,
     createdBy: user,
@@ -87,6 +88,7 @@ function dataGridRow(employee, user, date, department, response, id) {
     department,
     response,
     id,
+    rating,
   };
 }
 
@@ -135,6 +137,15 @@ class AdminViewResponse extends React.Component {
         headerName: "Respuesta",
         width: 250,
       },
+      {
+        field: "rating",
+        headerName: "Valoración",
+        renderCell: (params) => {
+          return <CustomRating readOnly {...params} />;
+        },
+        disableExport: false,
+        width: 300,
+      },
     ];
   }
 
@@ -173,7 +184,8 @@ class AdminViewResponse extends React.Component {
                 complaint.date,
                 complaint.complaintDepartment,
                 complaint.message,
-                complaint.id
+                complaint.id,
+                complaint.rating
               );
             })}
             columns={this.renderColumns()}
@@ -189,7 +201,8 @@ class AdminViewResponse extends React.Component {
                 claim.date,
                 claim.claimDepartment,
                 claim.message,
-                claim.id
+                claim.id,
+                claim.rating
               );
             })}
             columns={this.renderColumns()}

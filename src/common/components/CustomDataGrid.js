@@ -75,6 +75,10 @@ class CustomDataGrid extends React.PureComponent {
           classes={{
             root: classes.root,
           }}
+          onCellEditCommit={this.props.onCellEditCommit}
+          onCellEditStop={this.props.onCellEditStop}
+          isCellEditable={this.props.isCellEditable}
+          onEditCellPropsChange={this.props.onEditCellPropsChange}
         />
       </div>
     );
